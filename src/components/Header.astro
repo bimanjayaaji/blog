@@ -107,4 +107,18 @@ const number = (i: number) => String(i + 1).padStart(2, '0');
   nav a[aria-current='page'] {
     font-weight: 700;
   }
+
+  /* Phones: three menu items need ~390px at full size; slightly smaller text and gaps
+     keep "01 : Blog  02 : Galleries  03 : About" on one line from ~355px up, so on
+     common 360px phones too (05/S2).
+     Narrower screens still wrap, which is fine. */
+  @media (max-width: 39.99rem) {
+    nav {
+      font-size: var(--text-s);
+    }
+
+    ul {
+      column-gap: calc(var(--space-m) * 0.75);
+    }
+  }
 </style>

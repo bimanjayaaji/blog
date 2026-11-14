@@ -11,6 +11,7 @@ export const SITE = {
 // There's no Home: "/" forwards to /blog/ (03/D5, astro.config.mjs `redirects`).
 export const NAV = [
   { label: 'Blog', href: '/blog/' },
+  { label: 'Galleries', href: '/galleries/' },   // photo albums (05/D2)
   { label: 'About', href: '/about/' },
 ];
 
