@@ -95,7 +95,7 @@ Put a post's photos in `src/assets/images/<slug>/` and refer to them with the `@
 
 ## The About page
 
-The text (bio, book and show lists) is `src/content/pages/about.md`; edit it like a post. The photo is in `src/pages/about.astro`. The Instagram / LinkedIn / Goodreads links (footer icons) and the menu are in `src/config.ts` (`SOCIAL`, `NAV`).
+The text (bio, book and show lists) is `src/content/pages/about.md`; edit it like a post. The photo is in `src/pages/about.astro`. The Instagram / LinkedIn / Goodreads links (icons under the About photo and in the footer) and the menu are in `src/config.ts` (`SOCIAL`, `NAV`).
 
 ## Galleries
 
