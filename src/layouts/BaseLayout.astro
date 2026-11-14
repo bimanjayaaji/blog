@@ -17,14 +17,15 @@ import '../styles/global.css';
 interface Props {
   title?: string;        // page title; omitted on the home page
   description?: string;  // shown by search engines and link previews
+  lang?: string;         // page language; defaults to the site's (posts pass their own)
 }
 
-const { title, description = SITE.description } = Astro.props;
+const { title, description = SITE.description, lang = SITE.lang } = Astro.props;
 const fullTitle = title ? `${title} · ${SITE.name}` : SITE.name;
 ---
 
 <!doctype html>
-<html lang={SITE.lang}>
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

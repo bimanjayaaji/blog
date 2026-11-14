@@ -1,0 +1,62 @@
+---
+// The blog list: every post, newest first. Plain for now; the blog-index feature
+// adds grouping by year, tags and reading time.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPosts, postUrl, formatDate } from '../../lib/posts';
+
+const posts = await getPosts();
+---
+
+<BaseLayout title="Blog" description="Posts by Bimanjaya.">
+  <h1>Blog</h1>
+
+  {posts.length === 0 ? (
+    <p>No posts yet.</p>
+  ) : (
+    <ul class="post-list">
+      {posts.map((post) => (
+        <li>
+          <time datetime={post.data.date.toISOString().slice(0, 10)}>{formatDate(post.data.date)}</time>
+          <span>
+            <a href={postUrl(post)} lang={post.data.lang}>{post.data.title}</a>
+            {post.data.draft && <span class="draft">draft</span>}
+          </span>
+        </li>
+      ))}
+    </ul>
+  )}
+</BaseLayout>
+
+<style>
+  .post-list {
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Narrow screens: date stacked above the title. */
+  .post-list li {
+    display: grid;
+    padding-block: var(--space-s);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  /* Wider screens: date and title side by side, sharing a text baseline. */
+  @media (min-width: 36rem) {
+    .post-list li {
+      grid-template-columns: 10rem 1fr;
+      align-items: baseline;
+      gap: var(--space-m);
+    }
+  }
+
+  .post-list time {
+    color: var(--color-muted);
+    font-size: var(--text-s);
+  }
+
+  .draft {
+    margin-left: var(--space-s);
+    color: var(--color-accent);
+    font-size: var(--text-s);
+  }
+</style>

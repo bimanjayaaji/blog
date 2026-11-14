@@ -90,7 +90,7 @@ h2 { font-size: var(--text-l); }
 h3 { font-size: var(--text-m); }
 
 /* Vertical rhythm: space between consecutive blocks of content */
-:where(p, ul, ol, blockquote, pre, figure, h1, h2, h3) + * {
+:where(p, ul, ol, blockquote, pre, figure, hr, h1, h2, h3) + * {
   margin-top: var(--space-m);
 }
 
