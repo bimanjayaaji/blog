@@ -1,0 +1,35 @@
+# Life on Film (Yes, Film Still Exists): photos in display order. Move lines to reorder.
+# Each photo: image (required), caption (optional), alt (optional; to write in feature 05).
+title: "Life on Film (Yes, Film Still Exists)"
+photos:
+  - image: ../../assets/galleries/lof/pano-29.jpg
+  - image: ../../assets/galleries/lof/pano-10.jpg
+    caption: "my beloved napping. this photo never fails to remind me about the experience of taking a picture using an SLR film camera. it slows you down, forcing you to take your time.. with your subject. with the composition. with your environment. with the natural light present around you. it even makes you think about the physics of light intensity and the photons. seriously. and when you get to see the result, it washed over you again.. the deep longing of you wanting to make that particular moment lives on. [[it took me around 5 to 10 minutes to observe-plan-capture this single photo. and it was fun!]]"
+  - image: ../../assets/galleries/lof/pano-32.jpg
+  - image: ../../assets/galleries/lof/pano-14.jpg
+  - image: ../../assets/galleries/lof/pano-13.jpg
+  - image: ../../assets/galleries/lof/pano-11.jpg
+  - image: ../../assets/galleries/lof/pano-20.jpg
+    caption: "a really nice example on how great film can take up direct harsh light from the sun and dial it down to make it gracefully blended with the sky"
+  - image: ../../assets/galleries/lof/pano-10-2.jpg
+  - image: ../../assets/galleries/lof/a002096-r1-22-20.jpg
+  - image: ../../assets/galleries/lof/a002096-r1-07-5.jpg
+    caption: "i did not actually take this one. it was captured by my beloved when we were walking around the 'pasar kaget' at jalan lingkar salatiga on a sunday morning"
+  - image: ../../assets/galleries/lof/a002096-r1-11-9.jpg
+  - image: ../../assets/galleries/lof/how-film-plays-w-light.jpg
+  - image: ../../assets/galleries/lof/this-is-wedding.jpg
+  - image: ../../assets/galleries/lof/dad.jpg
+    caption: "this is my dad, waiting for my mom to do her make up in our really-looking-like-a-house house, before attending a wedding"
+  - image: ../../assets/galleries/lof/weekend-ritual.jpg
+  - image: ../../assets/galleries/lof/smaga-from-above.jpg
+  - image: ../../assets/galleries/lof/lawang-sewu-from-above.jpg
+  - image: ../../assets/galleries/lof/r1-09578-0021.jpg
+    caption: "ereveld kalibanteng. a war cemetery. although the name bears heavy and maybe 'horror' sentiment, this place has its own magic for me, in a good way."
+  - image: ../../assets/galleries/lof/r1-09578-0019.jpg
+    caption: "my big family having fun on christmas holiday. i like the composition and the chaotic condition which is contained in a calm nice tone and a spread focus"
+  - image: ../../assets/galleries/lof/r1-09578-0018.jpg
+    caption: "warm was the morning. the moment i fixed my eyes on the scene, i knew i will have this on my film. two trunks of trees at the background are bending toward the west. but the one on the front is facing to the east, embracing the morning sunlight. i thought it was beautiful and convey some kind of message."
+  - image: ../../assets/galleries/lof/r1-09578-0007.jpg
+  - image: ../../assets/galleries/lof/r1-09578-0006.jpg
+  - image: ../../assets/galleries/lof/pano-33.jpg
+    caption: "we had a short trip to jogja and had a chance to visit gramedia sudirman (or soedirman?). it was nice, and this photo is an iconic one. if you look closer (and familiar with books!), you'll realize that this smiling pretty lady is holding a book with a sad and depressed looking man on the cover. written by osamu dazai titled 'no longer human' or 'gagal menjadi manusia'. so allegorical :D this photo is practically all of us, wkwkw"

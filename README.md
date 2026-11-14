@@ -60,19 +60,28 @@ Put a post's photos in `src/assets/images/<slug>/` and refer to them with the `@
 - Photos are shown as wide as the text column. Markdown can't size an image, and an HTML `<img>` tag in a post is **not** optimised (and its path won't work), so stick to `![…](…)`.
 - Don't put photos in `public/`: files there are served as-is, without resizing.
 
+## The About page and the galleries
+
+- **About:** the text (bio, book and show lists) is `src/content/pages/about.md`; edit it like a post. The photo and the Instagram / LinkedIn / Goodreads links are in `src/pages/about.astro`.
+- **Galleries:** `src/content/galleries/gallery.yaml` and `lof.yaml` list each gallery's photos in display order, with optional `caption` and `alt`. The photos are in `src/assets/galleries/<gallery|lof>/`. To add one, copy the photo in and add a `- image: ../../assets/galleries/lof/<file>` line where it should appear. A wrong file name stops the build. No page shows the galleries yet (planned).
+
 ## Layout
 
 | Path | What's in it |
 |---|---|
 | `src/content/posts/` | The posts (Markdown) |
-| `src/assets/images/` | Photos used in posts, one folder per post |
+| `src/content/pages/` | Page text kept in Markdown (`about.md`) |
+| `src/content/galleries/` | Gallery lists (`gallery.yaml`, `lof.yaml`) |
+| `src/assets/images/` | Photos used in posts, one folder per post; `about/` for the About photo |
+| `src/assets/galleries/` | Gallery photos, one folder per gallery |
 | `src/pages/` | One file per page; the file path is the URL (`about.astro` → `/about/`). `blog/[slug].astro` builds one page per post. |
 | `src/layouts/` | Page shells: `BaseLayout` (every page), `PostLayout` (posts) |
 | `src/components/` | Header, Footer |
 | `src/styles/global.css` | Design tokens (colours, fonts, spacing) and base styles |
 | `src/config.ts` | Site name, description, nav links |
-| `src/content.config.ts` | The rules for post frontmatter |
+| `src/content.config.ts` | The rules for post frontmatter, page text and gallery lists |
 | `src/plugins/` | A Markdown plugin that gives images their real display size |
 | `public/` | Files copied as-is to the site root (favicon) |
 | `astro.config.mjs` | Astro settings (image sizes, Markdown processing) |
+| `scripts/wp-import/` | One-off scripts that imported the old WordPress site (from `wp-archive/`, not in git) |
 | `dev/` | Development notes: features, stages, decisions. Start at [dev/README.md](dev/README.md) |

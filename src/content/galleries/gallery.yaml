@@ -1,0 +1,24 @@
+# Gallery: photos in display order. Move lines to reorder.
+# Each photo: image (required), caption (optional), alt (optional; to write in feature 05).
+title: "Gallery"
+photos:
+  - image: ../../assets/galleries/gallery/20230423104420-img-7514.jpg
+  - image: ../../assets/galleries/gallery/20230423103527-img-7481.jpg
+  - image: ../../assets/galleries/gallery/c159acd0-18a5-4bab-96d0-aa62175d861a.jpg
+  - image: ../../assets/galleries/gallery/1000164554.jpg
+  - image: ../../assets/galleries/gallery/73ecf4de-deec-4252-a020-d50af4134a67.jpg
+  - image: ../../assets/galleries/gallery/sampokong.jpg
+  - image: ../../assets/galleries/gallery/20230421144408-img-7036-2.jpg
+  - image: ../../assets/galleries/gallery/20230422153055-img-7219-1.jpg
+  - image: ../../assets/galleries/gallery/7b95ddeb-6859-475c-afcc-c6dd456482fc.jpg
+  - image: ../../assets/galleries/gallery/20230404004819-img-6914.jpg
+  - image: ../../assets/galleries/gallery/20230421161851-img-7113-1.jpg
+  - image: ../../assets/galleries/gallery/merbabu.jpg
+  - image: ../../assets/galleries/gallery/20230423082236-img-7354.jpg
+  - image: ../../assets/galleries/gallery/20230423082129-img-7350.jpg
+  - image: ../../assets/galleries/gallery/20230423111146-img-7557-2.jpg
+  - image: ../../assets/galleries/gallery/heartbreak.jpg
+  - image: ../../assets/galleries/gallery/plane.jpg
+  - image: ../../assets/galleries/gallery/mebeach.jpg
+  - image: ../../assets/galleries/gallery/1000164555.jpg
+  - image: ../../assets/galleries/gallery/1000164559.jpg
