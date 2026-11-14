@@ -9,17 +9,21 @@ import PostLayout from '../../layouts/PostLayout.astro';
 import { getPosts, type Post } from '../../lib/posts';
 
 export async function getStaticPaths() {
-  const posts = await getPosts();
-  return posts.map((post) => ({
+  const posts = await getPosts();   // newest first
+  return posts.map((post, i) => ({
     params: { slug: post.id },   // fills in [slug] → /blog/<id>/
-    props: { post },             // handed to this page as Astro.props
+    props: {                     // handed to this page as Astro.props
+      post,
+      previous: posts[i + 1],    // the older post (undefined for the oldest)
+      next: posts[i - 1],        // the newer post (undefined for the newest)
+    },
   }));
 }
 
-const { post } = Astro.props as { post: Post };
+const { post, previous, next } = Astro.props as { post: Post; previous?: Post; next?: Post };
 const { Content } = await render(post);   // the Markdown body, turned into HTML
 ---
 
-<PostLayout post={post}>
+<PostLayout post={post} previous={previous} next={next}>
   <Content />
 </PostLayout>

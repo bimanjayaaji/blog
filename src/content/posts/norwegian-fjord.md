@@ -16,7 +16,6 @@ Waktu ku-googling, ternyata ini definisinya
 Terus ini contoh foto aktualnya
 
 ![norwegian fjord](@images/norwegian-fjord/fjord.jpg)
-
 *(sumber gambar: google. ini guys yang namanya fjord.. jadi pengen liburan)*
 
 Momen penemuan kata baru ini jadi bikin aku mikir betapa bahasa memang sekeren dan sekompleks itu. Beberapa coret-coretan garis *random* yang dijejerin bisa dipakai buat jadi simbol untuk menggambarkan tempat/suasana/kondisi atau apapun itu yang kita mau. Itu baru satu kata! Kalau beberapa coret-coretan dirangkai dengan coretan lain, bisa tercipta satu konsep pikiran/perasaan/intensi yang spesifik.

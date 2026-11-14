@@ -6,6 +6,7 @@
  *                     Redesigning the site starts here (feature: site-look).
  * 2. Reset          — removes browser defaults that get in the way.
  * 3. Base elements  — readable defaults for text, links, headings, code.
+ * 4. Photos in posts — sizes, captions, rows (see src/plugins/markdown-figures.mjs).
  */
 
 /* ---------- 1. Design tokens ---------- */
@@ -169,4 +170,63 @@ hr {
 
 .astro-code {
   background-color: var(--color-code-bg);
+}
+
+/* ---------- 4. Photos in posts (src/plugins/markdown-figures.mjs, 03/D6) ---------- */
+
+/* Every photo: never wider than the column, never taller than 80% of the window.
+   A tall portrait then shrinks (keeping its shape) and is centred (BACKLOG B3). */
+figure img {
+  width: auto;
+  max-height: 80vh;
+  margin-inline: auto;
+}
+
+figcaption {
+  margin-top: var(--space-s);
+  color: var(--color-muted);
+  font-size: var(--text-s);
+  font-style: italic;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* {.small}: at most half the column. */
+.figure.small img {
+  max-width: min(100%, 23rem);
+}
+
+/* {.wide}: wider than the text, up to the frame. Only on screens with room for it
+   (66rem = the 64rem frame + side padding); below that it's simply column width. */
+@media (min-width: 66rem) {
+  .figure.wide {
+    width: var(--width-frame);
+    margin-inline: calc((100% - var(--width-frame)) / 2);   /* negative: reaches past the column */
+  }
+}
+
+/* Side by side: equal columns; stacked below 40rem (photos too small otherwise).
+   The photos fill their column; no height cap, so the row stays even. */
+.figure.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-s);
+}
+
+.figure.row img {
+  flex: 1 1 100%;                /* phones: each photo a full line */
+  min-width: 0;
+  width: 100%;
+  max-height: none;
+}
+
+@media (min-width: 40rem) {
+  .figure.row img {
+    flex-basis: 0;               /* wider: the photos share one line equally */
+  }
+}
+
+.figure.row figcaption {
+  flex-basis: 100%;              /* the caption takes its own line under the row */
 }

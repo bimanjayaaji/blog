@@ -17,6 +17,7 @@ npm run dev      # dev server at http://localhost:4321, reloads on save
 | `npm run dev` | Dev server with live reload. Shows drafts. |
 | `npm run build` | Build the finished site into `dist/`. Leaves drafts out. |
 | `npm run preview` | Serve `dist/` locally, to check the build before publishing |
+| `npm run clean` | Delete Astro's cache of rendered posts (after changing Markdown settings or plugins) |
 
 ## Write a post
 
@@ -57,7 +58,24 @@ Put a post's photos in `src/assets/images/<slug>/` and refer to them with the `@
 
 - The text in `[…]` describes the photo for people who can't see it (screen readers, slow connections). Always fill it in.
 - Use full-size photos straight from the camera or phone. The build makes resized WebP versions (640–1920 px wide) and each reader's browser downloads the one that fits their screen.
-- Photos are shown as wide as the text column. Markdown can't size an image, and an HTML `<img>` tag in a post is **not** optimised (and its path won't work), so stick to `![…](…)`.
+- Photos are shown as wide as the text column, and never taller than 80% of the screen (tall portraits shrink and are centred). An HTML `<img>` tag in a post is **not** optimised (and its path won't work), so stick to `![…](…)`.
+- **Sizes:** add `{.small}` (at most half the column, centred: screenshots, small images) or `{.wide}` (wider than the text, on big screens) right after the image:
+  ```markdown
+  ![chat from a friend](@images/persami/chat.jpg){.small}
+  ![the mountain](@images/persami/andong.jpg){.wide}
+  ```
+- **Caption:** an italic line *directly* under the photo, with no blank line between. Links work in it:
+  ```markdown
+  ![sunrise](@images/persami/sunrise.jpg)
+  *photo by [@someone](https://x.com/someone)*
+  ```
+- **Side by side:** image lines directly under each other, no blank line (2 or 3 photos; they stack on phones). A caption line can follow; `{.wide}` on any of them makes the whole row wide.
+  ```markdown
+  ![pos 1](@images/persami/pos-1.jpg)
+  ![the top](@images/persami/top.jpg)
+  ```
+- A blank line between two images (or an image and an italic line) keeps them separate, as before.
+- After changing anything in `astro.config.mjs` or `src/plugins/` (not needed for posts): `npm run clean`, then restart `npm run dev` / rebuild. Astro caches rendered posts and wouldn't notice.
 - Don't put photos in `public/`: files there are served as-is, without resizing.
 
 ## The About page and the galleries
@@ -80,7 +98,7 @@ Put a post's photos in `src/assets/images/<slug>/` and refer to them with the `@
 | `src/styles/global.css` | Design tokens (colours, fonts, spacing) and base styles |
 | `src/config.ts` | Site name, description, nav links |
 | `src/content.config.ts` | The rules for post frontmatter, page text and gallery lists |
-| `src/plugins/` | A Markdown plugin that gives images their real display size |
+| `src/plugins/` | Markdown plugins: photos → figures (sizes, captions, rows); image size hints |
 | `public/` | Files copied as-is to the site root (favicon) |
 | `astro.config.mjs` | Astro settings (image sizes, Markdown processing) |
 | `scripts/wp-import/` | One-off scripts that imported the old WordPress site (from `wp-archive/`, not in git) |

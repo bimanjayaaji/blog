@@ -2,6 +2,7 @@
 import { defineConfig, fontProviders } from 'astro/config';
 import { satteri } from '@astrojs/markdown-satteri';
 import { markdownImageSizes } from './src/plugins/markdown-image-sizes.mjs';
+import { markdownFigures } from './src/plugins/markdown-figures.mjs';
 
 // Image widths to generate. The text column is at most 736px (46rem); ×2 for
 // high-density (retina) screens needs ~1472, covered by 1920. 1920 also leaves room
@@ -64,7 +65,12 @@ export default defineConfig({
 
     // Sätteri is Astro's default Markdown processor; it's named here only to add a plugin.
     processor: satteri({
+      // attributes: lets a post write {.small} / {.wide} after an image (03/D6).
+      features: { attributes: true },
       hastPlugins: [
+        // Photos → <figure>: sizes, captions, side-by-side rows. See the file for the syntax.
+        markdownFigures({ widths: IMAGE_WIDTHS }),
+        // Any other image (e.g. inside a list): the column-width size hint.
         markdownImageSizes({
           // Images in posts sit in the text column: 46rem (736px) wide once the window
           // is wider than 48rem (the column plus its side padding), otherwise the window
