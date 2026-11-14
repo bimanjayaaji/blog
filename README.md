@@ -21,7 +21,7 @@ npm run dev      # dev server at http://localhost:4321, reloads on save
 
 ## Write a post
 
-1. Create `src/content/posts/<slug>.md`. The file name becomes the URL: `norwegian-fjord.md` → `/blog/norwegian-fjord/`. Lowercase, words joined with `-`.
+1. Create `src/content/posts/<slug>.md`. The file name becomes the URL: `norwegian-fjord.md` → `/blog/norwegian-fjord/`. Lowercase, words joined with `-`. Two kinds of name are taken: a bare year (`2025.md`) and `tag.md`, because `/blog/2025/` and `/blog/tag/` are other pages. The build stops and says so if you use one.
 2. Start it with frontmatter, then write the post in Markdown:
 
    ```markdown
@@ -42,11 +42,25 @@ npm run dev      # dev server at http://localhost:4321, reloads on save
    | `title` | yes | |
    | `date` | yes | `YYYY-MM-DD` |
    | `description` | no | Falls back to the site description |
-   | `tags` | no | A list: `[travel, norway]` |
+   | `tags` | no | A list: `[travel, norway]`. Each tag gets its own page (see below). |
    | `lang` | no | `en` (default) or `id`: the post's main language. Mixing in the other language is fine. |
    | `draft` | no | `true` = visible in `npm run dev` only, left out of the built site |
 
    A wrong value (a misspelt field, `date: tomorrow`, `lang: fr`) stops the build with a message naming the file and the field.
+
+### Tags and years
+
+The blog organises itself from the posts' `date` and `tags`; there's nothing to update by hand.
+
+| Page | Address | Shows |
+|---|---|---|
+| Blog | `/blog/` | Every post, grouped by year, newest first, with its tags |
+| A year | `/blog/2025/` | That year's posts; links to the years before and after (years without posts are skipped) |
+| A tag | `/blog/tag/thoughts/` | The posts with that tag, grouped by year |
+| All tags | `/blog/tag/` | Every tag with its number of posts, most used first |
+
+- A tag's address is the tag in lowercase with spaces turned into `-`: `Life on Film` → `/blog/tag/life-on-film/`. The page still shows it as written. `Books` and `books` count as the same tag.
+- A new tag or a new year gets its page on the next build. A tag or year used only by drafts shows up in `npm run dev` only.
 
 ### Photos
 
@@ -100,10 +114,11 @@ Put a post's photos in `src/assets/images/<slug>/` and refer to them with the `@
 | `src/content/galleries/` | Gallery lists (`gallery.yaml`, `lof.yaml`) |
 | `src/assets/images/` | Photos used in posts, one folder per post; `about/` for the About photo |
 | `src/assets/galleries/` | Gallery photos, one folder per gallery |
-| `src/pages/` | One file per page; the file path is the URL (`about.astro` → `/about/`). `blog/[slug].astro` builds one page per post. |
+| `src/pages/` | One file per page; the file path is the URL (`about.astro` → `/about/`). `blog/[slug].astro` builds one page per post, `blog/[year].astro` one per year, `blog/tag/[tag].astro` one per tag; `blog/tag/index.astro` is the tag list. |
 | `src/layouts/` | Page shells: `BaseLayout` (every page), `PostLayout` (posts) |
-| `src/components/` | Header (numbered menu), ThemeToggle (sun/moon), Footer, SocialLinks (icons) |
-| `src/styles/global.css` | Design tokens (colours light + dark, fonts, sizes, widths), base styles, photo figures |
+| `src/components/` | Header (numbered menu), ThemeToggle (sun/moon), Footer, SocialLinks (icons), PostList (the year-grouped list on the blog, tag and year pages) |
+| `src/styles/global.css` | Design tokens (colours light + dark, fonts, sizes, widths), base styles, photo figures, list-page headings |
+| `src/lib/posts.ts` | Helpers for posts: the post list (drafts in dev only), dates, years, tags and their addresses |
 | `src/config.ts` | Site name, description, menu (`NAV`), social links (`SOCIAL`) |
 | `src/content.config.ts` | The rules for post frontmatter, page text and gallery lists |
 | `src/plugins/` | Markdown plugins: photos → figures (sizes, captions, rows); image size hints |

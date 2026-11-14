@@ -1,10 +1,13 @@
 ---
-// The blog list: every post, newest first. It's also the site's front page ("/" forwards
-// here, 03/D5). The blog-index feature adds grouping by year, tags and reading time.
+// The blog list: every post, grouped by year, newest first (04/D1). It's also the site's
+// front page ("/" forwards here, 03/D5). The list itself is src/components/PostList.astro,
+// shared with the tag pages and year pages. The .intro style is in global.css (shared too).
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getPosts, postUrl, formatDate } from '../../lib/posts';
+import PostList from '../../components/PostList.astro';
+import { countPosts, getPosts, postYear } from '../../lib/posts';
 
 const posts = await getPosts();
+const firstYear = posts.length > 0 ? postYear(posts[posts.length - 1]) : undefined;
 ---
 
 <BaseLayout title="Blog" description="Posts by Bimanjaya.">
@@ -13,62 +16,12 @@ const posts = await getPosts();
   {posts.length === 0 ? (
     <p>No posts yet.</p>
   ) : (
-    <ul class="post-list">
-      {posts.map((post) => (
-        <li>
-          <time datetime={post.data.date.toISOString().slice(0, 10)}>{formatDate(post.data.date)}</time>
-          <span>
-            <a href={postUrl(post)} lang={post.data.lang}>{post.data.title}</a>
-            {post.data.draft && <span class="draft">draft</span>}
-          </span>
-        </li>
-      ))}
-    </ul>
+    <>
+      <p class="intro">
+        {countPosts(posts.length)} since {firstYear} · <a href="/blog/tag/">all tags</a>
+      </p>
+      <PostList posts={posts} />
+    </>
   )}
 </BaseLayout>
 
-<style>
-  .post-list {
-    padding: 0;
-    list-style: none;
-  }
-
-  /* Narrow screens: date stacked above the title. */
-  .post-list li {
-    display: grid;
-    padding-block: var(--space-s);
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  /* Wider screens: date and title side by side, sharing a text baseline. */
-  @media (min-width: 36rem) {
-    .post-list li {
-      grid-template-columns: 10rem 1fr;
-      align-items: baseline;
-      gap: var(--space-m);
-    }
-  }
-
-  /* Titles in the text colour, teal when pointed at (03/S4): calmer than 13 underlined links. */
-  .post-list a {
-    color: var(--color-text);
-    text-decoration: none;
-  }
-
-  .post-list a:hover,
-  .post-list a:focus-visible {
-    color: var(--color-accent);
-  }
-
-  .post-list time {
-    color: var(--color-muted);
-    font-family: var(--font-ui);
-    font-size: var(--text-s);
-  }
-
-  .draft {
-    margin-left: var(--space-s);
-    color: var(--color-accent);
-    font-size: var(--text-s);
-  }
-</style>

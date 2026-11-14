@@ -1,0 +1,82 @@
+---
+/*
+ * One page per year that has posts, at /blog/<year>/ (04/D4).
+ *
+ * Posts also live at /blog/<something>/ (src/pages/blog/[slug].astro). Both files are
+ * "dynamic routes" at the same level; that works because each one only builds the
+ * addresses its getStaticPaths() lists: this file the years, [slug].astro the post names.
+ * A post file named like a year would collide, so getPosts() refuses such names.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+import { countPosts, getPosts, groupByYear, yearUrl, type Post } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const years = groupByYear(await getPosts());   // newest first, only years with posts
+  return years.map(({ year, posts }, i) => ({
+    params: { year: String(year) },   // fills in [year] → /blog/2025/
+    props: {
+      year,
+      posts,
+      older: years[i + 1]?.year,      // the previous year with posts (skips empty years)
+      newer: years[i - 1]?.year,
+    },
+  }));
+}
+
+const { year, posts, older, newer } = Astro.props as {
+  year: number;
+  posts: Post[];
+  older?: number;
+  newer?: number;
+};
+---
+
+<BaseLayout title={`${year}`} description={`Posts by Bimanjaya from ${year}.`}>
+  <p class="eyebrow">Year</p>
+  <h1>{year}</h1>
+  <p class="intro">{countPosts(posts.length)}</p>
+
+  {/* The page is the year, so no year heading inside: just the rows. */}
+  <div class="list">
+    <PostList posts={posts} groupByYear={false} />
+  </div>
+
+  {(older || newer) && (
+    <nav class="year-nav" aria-label="Other years">
+      {older && <a class="older" href={yearUrl(older)} rel="prev">← {older}</a>}
+      {newer && <a class="newer" href={yearUrl(newer)} rel="next">{newer} →</a>}
+    </nav>
+  )}
+
+  <p class="back-links">
+    <a href="/blog/">← All posts</a>
+  </p>
+</BaseLayout>
+
+<style>
+  .list {
+    margin-top: var(--space-l);
+  }
+
+  /* "← 2023 ......... 2026 →": older on the left, newer on the right, as on post pages. */
+  .year-nav {
+    display: flex;
+    margin-top: var(--space-xl);
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--color-border);
+    font-family: var(--font-ui);
+  }
+
+  .year-nav a {
+    text-decoration: none;
+  }
+
+  .newer {
+    margin-left: auto;   /* stays on the right even when there's no older year */
+  }
+
+  .year-nav + .back-links {
+    margin-top: var(--space-l);
+  }
+</style>

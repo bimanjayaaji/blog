@@ -1,0 +1,35 @@
+---
+/*
+ * One page per tag, at /blog/tag/<tag>/ (04/D3): the posts with that tag, grouped by year.
+ * Like the post pages, this is a "dynamic route": [tag] in the file name is a placeholder.
+ * At build time Astro calls getStaticPaths(), which returns one entry per tag, and builds
+ * this page once for each. A new tag in any post gets its page on the next build.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PostList from '../../../components/PostList.astro';
+import { countPosts, getPosts, getTags, type Tag } from '../../../lib/posts';
+
+export async function getStaticPaths() {
+  const tags = getTags(await getPosts());   // drafts count in dev only, like everywhere else
+  return tags.map((tag) => ({
+    params: { tag: tag.slug },   // fills in [tag] → /blog/tag/thoughts/
+    props: { tag },
+  }));
+}
+
+const { tag } = Astro.props as { tag: Tag };
+---
+
+<BaseLayout title={`${tag.name} · Tags`} description={`Posts tagged “${tag.name}”.`}>
+  <p class="eyebrow">Tag</p>
+  <h1>{tag.name}</h1>
+  <p class="intro">{countPosts(tag.posts.length)}</p>
+
+  {/* Every row has this tag, so the rows don't repeat it. */}
+  <PostList posts={tag.posts} showTags={false} />
+
+  <p class="back-links">
+    <a href="/blog/tag/">← All tags</a>
+    <a href="/blog/">All posts</a>
+  </p>
+</BaseLayout>
