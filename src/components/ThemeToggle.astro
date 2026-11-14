@@ -1,0 +1,94 @@
+---
+/*
+ * ThemeToggle: the sun/moon button in the header (03/D3).
+ *
+ * How dark mode works, in three parts:
+ *   1. global.css: every colour is light-dark(light, dark); `color-scheme` picks one. By default
+ *      it follows the reader's system; <html data-theme="light|dark"> overrides that.
+ *   2. BaseLayout.astro <head>: a tiny inline script puts the saved choice back on <html>
+ *      before the page is drawn (no white flash).
+ *   3. This button: flips between light and dark and saves the choice (localStorage, which
+ *      the browser keeps for this site until the reader clears it).
+ *
+ * The button shows a moon in light mode ("switch to dark") and a sun in dark mode.
+ * aria-pressed tells screen readers whether dark mode is on.
+ */
+---
+
+<button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false">
+  <!-- Moon: shown in light mode -->
+  <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z" />
+  </svg>
+  <!-- Sun: shown in dark mode -->
+  <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+  </svg>
+</button>
+
+<script>
+  // Astro bundles this <script> into a small JS file, loaded once per page.
+  const root = document.documentElement;
+  const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+  // Dark right now? The saved/explicit choice wins; otherwise the system setting.
+  const isDark = () =>
+    root.dataset.theme ? root.dataset.theme === 'dark' : darkQuery.matches;
+
+  for (const button of document.querySelectorAll<HTMLButtonElement>('.theme-toggle')) {
+    const sync = () => button.setAttribute('aria-pressed', String(isDark()));
+    sync();
+    darkQuery.addEventListener('change', sync);   // system setting changed while the page is open
+
+    button.addEventListener('click', () => {
+      const next = isDark() ? 'light' : 'dark';
+      root.dataset.theme = next;
+      try {
+        localStorage.setItem('theme', next);
+      } catch {}                                  // storage blocked: still switches, just isn't remembered
+      sync();
+    });
+  }
+</script>
+
+<style>
+  .theme-toggle {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;               /* 44px: easy to tap */
+    height: 2.75rem;
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--color-muted);
+    cursor: pointer;
+  }
+
+  .theme-toggle:hover,
+  .theme-toggle:focus-visible {
+    color: var(--color-accent);
+  }
+
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Which icon shows follows the same rules as the colours: the data-theme attribute if set,
+     else the system setting. :global() reaches <html>, outside this component. */
+  .icon-sun { display: none; }
+
+  :global(:root[data-theme='dark']) .icon-sun { display: block; }
+  :global(:root[data-theme='dark']) .icon-moon { display: none; }
+
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .icon-sun { display: block; }
+    :global(:root:not([data-theme='light'])) .icon-moon { display: none; }
+  }
+</style>

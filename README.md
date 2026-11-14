@@ -62,7 +62,7 @@ Put a post's photos in `src/assets/images/<slug>/` and refer to them with the `@
 
 ## The About page and the galleries
 
-- **About:** the text (bio, book and show lists) is `src/content/pages/about.md`; edit it like a post. The photo and the Instagram / LinkedIn / Goodreads links are in `src/pages/about.astro`.
+- **About:** the text (bio, book and show lists) is `src/content/pages/about.md`; edit it like a post. The photo is in `src/pages/about.astro`. The Instagram / LinkedIn / Goodreads links (footer icons) and the menu are in `src/config.ts` (`SOCIAL`, `NAV`).
 - **Galleries:** `src/content/galleries/gallery.yaml` and `lof.yaml` list each gallery's photos in display order, with optional `caption` and `alt`. The photos are in `src/assets/galleries/<gallery|lof>/`. To add one, copy the photo in and add a `- image: ../../assets/galleries/lof/<file>` line where it should appear. A wrong file name stops the build. No page shows the galleries yet (planned).
 
 ## Layout

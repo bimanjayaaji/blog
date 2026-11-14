@@ -10,6 +10,13 @@ const IMAGE_WIDTHS = [640, 960, 1280, 1920];
 
 // https://astro.build/config
 export default defineConfig({
+  // No home page (03/D5): the site opens on the blog list. In the built site Astro writes a
+  // tiny dist/index.html that forwards straight to /blog/; a host like Cloudflare can turn
+  // this into a real server redirect later (feature 06).
+  redirects: {
+    '/': '/blog/',
+  },
+
   // Fonts (03/D1). Astro downloads the files from Fontsource while building and serves
   // them from this site (/_astro/fonts/…): readers never contact Google or Fontsource.
   // Each font becomes a CSS variable; global.css uses them in --font-body / --font-ui.

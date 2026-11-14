@@ -1,47 +1,80 @@
 ---
 /*
- * Header: site name + main navigation.
+ * Header: site name, numbered navigation ("01 : Blog"), dark-mode toggle (03/D4, D3).
  * The link for the page being viewed gets aria-current="page", which
  * screen readers announce and which the CSS below uses to highlight it.
  */
 import { SITE, NAV } from '../config';
+import ThemeToggle from './ThemeToggle.astro';
 
 // Astro.url is the URL of the page being built, e.g. /blog/
 const path = Astro.url.pathname;
 
-// "/" is only current on the home page; other links also match their sub-pages (/blog/... → Blog).
-const isCurrent = (href: string) =>
-  href === '/' ? path === '/' : path === href || path.startsWith(href);
+// A link is current on its own page and its sub-pages (/blog/persami/ → Blog).
+const isCurrent = (href: string) => path === href || path.startsWith(href);
+
+// 0 → "01", 1 → "02", …
+const number = (i: number) => String(i + 1).padStart(2, '0');
 ---
 
 <header class="site-header">
-  <a class="site-name" href="/">{SITE.name}</a>
+  <a class="site-name" href="/blog/">{SITE.name}</a>
+
   <nav aria-label="Main">
     <ul>
-      {NAV.map((item) => (
+      {NAV.map((item, i) => (
         <li>
           <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
-            {item.label}
+            {/* The number is decoration: hidden from screen readers, which just say "Blog". */}
+            <span class="nav-number" aria-hidden="true">{number(i)} : </span>{item.label}
           </a>
         </li>
       ))}
     </ul>
   </nav>
+
+  <div class="toggle">
+    <ThemeToggle />
+  </div>
 </header>
 
 <style>
   /* Styles here are scoped: they only apply to this component's elements. */
+  /*
+   * Layout, as a grid of named areas:
+   *   phone:    bimanjaya.            [toggle]
+   *             01 : Blog   02 : About
+   *   wider:    bimanjaya.     01 : Blog   02 : About   [toggle]
+   */
   .site-header {
-    display: flex;
-    flex-wrap: wrap;               /* on a narrow phone, nav drops below the name */
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-s) var(--space-l);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'name toggle'
+      'nav  nav';
+    align-items: center;
+    column-gap: var(--space-l);
     width: 100%;                   /* needed in body's flex column, or auto margins shrink it to its content */
     max-width: calc(var(--width-frame) + 2 * var(--gutter));   /* the wider frame (03/D8) */
     margin-inline: auto;
     padding: var(--space-l) var(--gutter) 0;
     font-family: var(--font-ui);
+  }
+
+  @media (min-width: 40rem) {
+    .site-header {
+      grid-template-columns: 1fr auto auto;
+      grid-template-areas: 'name nav toggle';
+      column-gap: var(--space-m);
+    }
+  }
+
+  .site-name { grid-area: name; }
+  nav { grid-area: nav; }
+
+  .toggle {
+    grid-area: toggle;
+    margin-right: calc(-1 * var(--space-s));   /* the icon lines up with the frame edge */
   }
 
   .site-name {
@@ -53,12 +86,15 @@ const isCurrent = (href: string) =>
 
   ul {
     display: flex;
-    gap: var(--space-m);
+    flex-wrap: wrap;
+    column-gap: var(--space-l);
     padding: 0;
     list-style: none;
   }
 
   nav a {
+    display: inline-block;
+    padding-block: 0.625rem;       /* taller tap target (~44px) without looking bigger */
     color: var(--color-muted);
     text-decoration: none;
   }
@@ -69,7 +105,6 @@ const isCurrent = (href: string) =>
   }
 
   nav a[aria-current='page'] {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
+    font-weight: 700;
   }
 </style>

@@ -1,7 +1,8 @@
 ---
 /*
  * About page. The text (bio, book and show lists) lives in src/content/pages/about.md:
- * edit it there, like a post. This file only lays out the photo, the links and that text.
+ * edit it there, like a post. This file only lays out the photo and that text.
+ * The social links are in the footer (src/config.ts, SOCIAL).
  */
 import { getEntry, render } from 'astro:content';
 import { Image } from 'astro:assets';
@@ -11,12 +12,6 @@ import portrait from '../assets/images/about/portrait.jpg';
 const page = await getEntry('pages', 'about');
 if (!page) throw new Error('src/content/pages/about.md is missing');
 const { Content } = await render(page);
-
-const links = [
-  { label: 'Instagram', href: 'https://www.instagram.com/bimanjayaaji/' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/bimanjaya-aji-94aa09331' },
-  { label: 'Goodreads', href: 'https://www.goodreads.com/user/show/83237760-bimanjaya' },
-];
 ---
 
 <BaseLayout title={page.data.title} description="Tentang Bimanjaya." lang={page.data.lang}>
@@ -30,10 +25,6 @@ const links = [
     class="portrait"
   />
 
-  <ul class="links">
-    {links.map((l) => <li><a href={l.href} rel="me">{l.label}</a></li>)}
-  </ul>
-
   <div class="about-body">
     <Content />
   </div>
@@ -44,14 +35,6 @@ const links = [
     width: 100%;
     max-width: 20rem;            /* a portrait photo at full column width would be very tall */
     height: auto;
-    margin-block: var(--space-m);
-  }
-
-  .links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-m);
-    padding: 0;
-    list-style: none;
+    margin: var(--space-m) auto;  /* auto left/right margins centre it in the column */
   }
 </style>
