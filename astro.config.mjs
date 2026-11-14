@@ -1,14 +1,40 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 import { satteri } from '@astrojs/markdown-satteri';
 import { markdownImageSizes } from './src/plugins/markdown-image-sizes.mjs';
 
-// Image widths to generate. The text column is at most 640px; ×2 for high-density
-// (retina) screens gives 1280. 1920 leaves room for wider images later.
+// Image widths to generate. The text column is at most 736px (46rem); ×2 for
+// high-density (retina) screens needs ~1472, covered by 1920. 1920 also leaves room
+// for wide images (up to the 64rem frame).
 const IMAGE_WIDTHS = [640, 960, 1280, 1920];
 
 // https://astro.build/config
 export default defineConfig({
+  // Fonts (03/D1). Astro downloads the files from Fontsource while building and serves
+  // them from this site (/_astro/fonts/…): readers never contact Google or Fontsource.
+  // Each font becomes a CSS variable; global.css uses them in --font-body / --font-ui.
+  // <Font> tags in BaseLayout.astro add the @font-face rules to every page.
+  fonts: [
+    {
+      provider: fontProviders.fontsource(),
+      name: 'Lora',                      // content: posts, About
+      cssVariable: '--font-lora',
+      weights: ['400 700'],              // a variable font: one file covers every weight in between
+      styles: ['normal', 'italic'],
+      subsets: ['latin'],                // English + Indonesian need nothing more
+      fallbacks: ['Georgia', 'serif'],
+    },
+    {
+      provider: fontProviders.fontsource(),
+      name: 'Courier Prime',             // header, menu, dates: the old site's font
+      cssVariable: '--font-courier-prime',
+      weights: [400, 700],
+      styles: ['normal'],
+      subsets: ['latin'],
+      fallbacks: ['Courier New', 'monospace'],
+    },
+  ],
+
   image: {
     // Every optimised image gets several sizes (a srcset), so a phone downloads
     // a small file and a desktop a bigger one.
@@ -20,14 +46,23 @@ export default defineConfig({
   },
 
   markdown: {
+    // Code blocks: a light and a dark colour set. defaultColor: false writes both as
+    // CSS variables (--shiki-light, --shiki-dark); global.css picks one per mode.
+    // Changing this? Delete .astro/data-store.json (or node_modules/.astro): Astro caches
+    // rendered posts and won't re-highlight them otherwise.
+    shikiConfig: {
+      themes: { light: 'github-light', dark: 'github-dark' },
+      defaultColor: false,
+    },
+
     // Sätteri is Astro's default Markdown processor; it's named here only to add a plugin.
     processor: satteri({
       hastPlugins: [
         markdownImageSizes({
-          // Images in posts sit in the text column: 40rem (640px) wide once the window
-          // is wider than 42rem (the column plus its side padding), otherwise the window
-          // width minus the 1rem padding on each side. Keep in sync with --measure / --gutter.
-          sizes: '(min-width: 42rem) 40rem, calc(100vw - 2rem)',
+          // Images in posts sit in the text column: 46rem (736px) wide once the window
+          // is wider than 48rem (the column plus its side padding), otherwise the window
+          // width minus the 1rem padding on each side. Keep in sync with --width-text / --gutter.
+          sizes: '(min-width: 48rem) 46rem, calc(100vw - 2rem)',
           widths: IMAGE_WIDTHS,
         }),
       ],

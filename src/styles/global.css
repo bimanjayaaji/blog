@@ -9,25 +9,40 @@
  */
 
 /* ---------- 1. Design tokens ---------- */
-:root {
-  /* Colours */
-  --color-bg: #ffffff;
-  --color-text: #1f1f1f;
-  --color-muted: #6b6b6b;      /* dates, captions, secondary text */
-  --color-border: #e4e4e4;
-  --color-accent: #b4432f;     /* links, current nav item */
-  --color-code-bg: #f4f4f4;
 
-  /* Fonts: system fonts for now; real choices come with the site-look feature */
-  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+/*
+ * Light and dark mode (03/D3).
+ * Each colour token is written as light-dark(<light value>, <dark value>). The browser
+ * picks one according to `color-scheme`:
+ *   - by default "light dark": it follows the reader's system setting;
+ *   - the toggle in the header sets <html data-theme="light|dark">, which pins one
+ *     (a small script in BaseLayout's <head> re-applies the saved choice on every page).
+ * `color-scheme` also makes scrollbars and form controls match.
+ */
+:root                    { color-scheme: light dark; }
+:root[data-theme='light'] { color-scheme: light; }
+:root[data-theme='dark']  { color-scheme: dark; }
+
+:root {
+  /* Colours: light, dark. Contrast on its own background: text ≥ 13:1, muted and accent ≥ 5:1. */
+  --color-bg:      light-dark(#ffffff, #1a1d1f);
+  --color-text:    light-dark(#1f1f1f, #e4e4e0);
+  --color-muted:   light-dark(#6b6b6b, #9aa1a5);   /* dates, captions, secondary text */
+  --color-border:  light-dark(#e4e4e4, #2e3336);
+  --color-accent:  light-dark(#007392, #56b6d0);   /* links, current nav item: the old site's teal (03/D2) */
+  --color-code-bg: light-dark(#f4f4f4, #24282b);
+
+  /* Fonts (03/D1). --font-lora / --font-courier-prime come from astro.config.mjs `fonts`. */
+  --font-body: var(--font-lora);                   /* content: posts, About */
+  --font-ui: var(--font-courier-prime);            /* site name, nav, dates, tags */
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;   /* code */
 
   /* Type scale */
-  --text-s: 0.875rem;
-  --text-m: 1.0625rem;          /* body text */
-  --text-l: 1.375rem;
-  --text-xl: 2rem;
-  --line-height: 1.65;
+  --text-s: 0.9375rem;          /* 15px: dates, footer */
+  --text-m: 1.125rem;           /* 18px: body text */
+  --text-l: 1.5rem;
+  --text-xl: 2.25rem;
+  --line-height: 1.75;
 
   /* Spacing scale */
   --space-xs: 0.25rem;
@@ -36,8 +51,9 @@
   --space-l: 2rem;
   --space-xl: 4rem;
 
-  /* Layout */
-  --measure: 42rem;             /* max width of the content column (~70 characters per line) */
+  /* Layout (03/D8). 1rem = the browser's base font size, 16px by default. */
+  --width-text: 46rem;          /* the reading column: ~70–75 characters per line in Lora */
+  --width-frame: 64rem;         /* header, footer (later: Previous/Next, wide photos) */
   --gutter: var(--space-m);     /* side padding on small screens */
 }
 
@@ -82,7 +98,8 @@ body {
 h1,
 h2,
 h3 {
-  line-height: 1.25;
+  line-height: 1.3;
+  font-weight: 600;
 }
 
 h1 { font-size: var(--text-xl); }
@@ -140,4 +157,16 @@ pre {
 hr {
   border: none;
   border-top: 1px solid var(--color-border);
+}
+
+/* Code blocks: Shiki writes each token's two colours as --shiki-light / --shiki-dark
+   (astro.config.mjs); light-dark() picks the one for the current mode. The block's
+   background is the site's own --color-code-bg (Shiki's light one is plain white). */
+.astro-code,
+.astro-code span {
+  color: light-dark(var(--shiki-light), var(--shiki-dark));
+}
+
+.astro-code {
+  background-color: var(--color-code-bg);
 }
