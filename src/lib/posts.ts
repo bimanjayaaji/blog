@@ -30,3 +30,52 @@ export function formatDate(date: Date): string {
     timeZone: 'UTC',
   });
 }
+
+/** "9 Nov": the date without its year, for lists grouped by year (04/D1). UTC, like formatDate. */
+export function formatShortDate(date: Date): string {
+  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' });
+}
+
+/** A post's year, e.g. 2025 (UTC, like the dates). */
+export function postYear(post: Post): number {
+  return post.data.date.getUTCFullYear();
+}
+
+/**
+ * Posts split into years, newest year first: [{ year: 2026, posts: [...] }, ...].
+ * Keeps the posts' order within a year (getPosts() gives newest first). Years without posts don't appear.
+ */
+export function groupByYear(posts: Post[]): { year: number; posts: Post[] }[] {
+  const years = new Map<number, Post[]>();
+  for (const post of posts) {
+    const year = postYear(post);
+    if (!years.has(year)) years.set(year, []);
+    years.get(year)!.push(post);
+  }
+  return [...years.entries()]
+    .sort(([a], [b]) => b - a)
+    .map(([year, posts]) => ({ year, posts }));
+}
+
+/** The URL of a year's page: /blog/2025/ (04/D4; the page itself comes in S3). */
+export function yearUrl(year: number): string {
+  return `/blog/${year}/`;
+}
+
+/**
+ * A tag's part of a URL: lowercase, spaces → "-" ("Life on Film" → "life-on-film").
+ * Proposed rule, 04/D3; the four current tags are already in this form.
+ */
+export function tagSlug(tag: string): string {
+  return tag.trim().toLowerCase().replace(/\s+/g, '-');
+}
+
+/** The URL of a tag's page: /blog/tag/thoughts/ (04/D3; the page itself comes in S2). */
+export function tagUrl(tag: string): string {
+  return `/blog/tag/${tagSlug(tag)}/`;
+}
+
+/** "1 post", "6 posts". */
+export function countPosts(n: number): string {
+  return `${n} post${n === 1 ? '' : 's'}`;
+}
