@@ -33,3 +33,5 @@ wp-archive/
 scripts/wp-import/
 
 __pycache__/
+
+.vscode/
