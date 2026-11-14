@@ -1,0 +1,74 @@
+---
+/*
+ * Header: site name + main navigation.
+ * The link for the page being viewed gets aria-current="page", which
+ * screen readers announce and which the CSS below uses to highlight it.
+ */
+import { SITE, NAV } from '../config';
+
+// Astro.url is the URL of the page being built, e.g. /blog/
+const path = Astro.url.pathname;
+
+// "/" is only current on the home page; other links also match their sub-pages (/blog/... → Blog).
+const isCurrent = (href: string) =>
+  href === '/' ? path === '/' : path === href || path.startsWith(href);
+---
+
+<header class="site-header">
+  <a class="site-name" href="/">{SITE.name}</a>
+  <nav aria-label="Main">
+    <ul>
+      {NAV.map((item) => (
+        <li>
+          <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<style>
+  /* Styles here are scoped: they only apply to this component's elements. */
+  .site-header {
+    display: flex;
+    flex-wrap: wrap;               /* on a narrow phone, nav drops below the name */
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-s) var(--space-l);
+    width: 100%;                   /* needed in body's flex column, or auto margins shrink it to its content */
+    max-width: var(--measure);
+    margin-inline: auto;
+    padding: var(--space-l) var(--gutter) 0;
+  }
+
+  .site-name {
+    font-size: var(--text-l);
+    font-weight: 700;
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  ul {
+    display: flex;
+    gap: var(--space-m);
+    padding: 0;
+    list-style: none;
+  }
+
+  nav a {
+    color: var(--color-muted);
+    text-decoration: none;
+  }
+
+  nav a:hover,
+  nav a[aria-current='page'] {
+    color: var(--color-accent);
+  }
+
+  nav a[aria-current='page'] {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+</style>

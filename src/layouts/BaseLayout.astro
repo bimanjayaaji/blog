@@ -1,0 +1,55 @@
+---
+/*
+ * BaseLayout: the shell every page is wrapped in.
+ * It owns <html>, <head> (title, meta tags), the header and the footer.
+ * A page passes its own content in, which lands where <slot /> is.
+ *
+ * Usage, in a page:
+ *   <BaseLayout title="About" description="Who I am">
+ *     <h1>About</h1> ...
+ *   </BaseLayout>
+ */
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../config';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;        // page title; omitted on the home page
+  description?: string;  // shown by search engines and link previews
+}
+
+const { title, description = SITE.description } = Astro.props;
+const fullTitle = title ? `${title} · ${SITE.name}` : SITE.name;
+---
+
+<!doctype html>
+<html lang={SITE.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  /* Centre the content column and keep lines a readable length. */
+  main {
+    flex: 1;                     /* take the leftover height, pushing the footer down */
+    width: 100%;
+    max-width: var(--measure);
+    margin-inline: auto;
+    padding: var(--space-l) var(--gutter) var(--space-xl);
+  }
+</style>
