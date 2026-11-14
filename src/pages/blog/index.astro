@@ -1,7 +1,7 @@
 ---
 // The blog list: every post, grouped by year, newest first (04/D1). It's also the site's
 // front page ("/" forwards here, 03/D5). The list itself is src/components/PostList.astro,
-// shared with the tag pages and year pages.
+// shared with the tag pages and year pages. The .intro style is in global.css (shared too).
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostList from '../../components/PostList.astro';
 import { countPosts, getPosts, postYear } from '../../lib/posts';
@@ -25,12 +25,3 @@ const firstYear = posts.length > 0 ? postYear(posts[posts.length - 1]) : undefin
   )}
 </BaseLayout>
 
-<style>
-  /* "13 posts since 2022 · all tags", in the header font, muted. */
-  .intro {
-    margin-top: var(--space-s);
-    color: var(--color-muted);
-    font-family: var(--font-ui);
-    font-size: var(--text-s);
-  }
-</style>

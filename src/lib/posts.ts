@@ -79,3 +79,28 @@ export function tagUrl(tag: string): string {
 export function countPosts(n: number): string {
   return `${n} post${n === 1 ? '' : 's'}`;
 }
+
+export interface Tag {
+  name: string;   // as written in the posts (the first spelling met, newest post first)
+  slug: string;   // its part of the URL, from tagSlug()
+  posts: Post[];  // the posts with this tag, in the order given (newest first)
+}
+
+/**
+ * Every tag used by these posts, most-used first, then A–Z (04/D3).
+ * Tags that give the same slug ("Books" and "books") count as one tag.
+ */
+export function getTags(posts: Post[]): Tag[] {
+  const tags = new Map<string, Tag>();
+  for (const post of posts) {
+    for (const name of post.data.tags) {
+      const slug = tagSlug(name);
+      if (!tags.has(slug)) tags.set(slug, { name, slug, posts: [] });
+      const tag = tags.get(slug)!;
+      if (!tag.posts.includes(post)) tag.posts.push(post);   // a post listing a tag twice counts once
+    }
+  }
+  return [...tags.values()].sort(
+    (a, b) => b.posts.length - a.posts.length || a.name.localeCompare(b.name),
+  );
+}

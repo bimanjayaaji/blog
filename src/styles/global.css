@@ -238,3 +238,34 @@ figcaption {
 .figure.row figcaption {
   flex-basis: 100%;              /* the caption takes its own line under the row */
 }
+
+/* ---------- 5. List pages: blog, tags, years (04) ---------- */
+
+/* Small label above a page's heading: "Tag", "Year". */
+.eyebrow {
+  color: var(--color-muted);
+  font-family: var(--font-ui);
+  font-size: var(--text-s);
+}
+
+.eyebrow + h1 {
+  margin-top: 0;
+}
+
+/* The line under a list page's heading: "13 posts since 2022 · all tags". */
+.intro {
+  margin-top: var(--space-s);
+  color: var(--color-muted);
+  font-family: var(--font-ui);
+  font-size: var(--text-s);
+}
+
+/* Links at the bottom of a list page: "← All tags   All posts". */
+.back-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s) var(--space-l);
+  margin-top: var(--space-xl);
+  font-family: var(--font-ui);
+  font-size: var(--text-s);
+}
