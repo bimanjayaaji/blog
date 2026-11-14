@@ -1,6 +1,9 @@
 # Gallery: photos in display order. Move lines to reorder.
-# Each photo: image (required), caption (optional), alt (optional; to write in feature 05).
+# Each photo: image (required), caption (optional: the story, gives a ¶ mark), alt (optional:
+# what the photo shows, for screen readers).
+# order: where the album's card sits on /galleries/ (smallest first).
 title: "Gallery"
+order: 1
 photos:
   - image: ../../assets/galleries/gallery/20230423104420-img-7514.jpg
   - image: ../../assets/galleries/gallery/20230423103527-img-7481.jpg

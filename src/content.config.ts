@@ -31,21 +31,28 @@ const pages = defineCollection({
   }),
 });
 
-// Photo galleries: one YAML file per gallery in src/content/galleries/ (gallery.yaml, lof.yaml),
-// listing its photos in display order (decision 02/D6). image() checks each photo file exists
-// and lets Astro optimise it; a wrong file name fails the build. No page shows them yet (feature 05).
+// Photo albums: one YAML file per album in src/content/galleries/ (gallery.yaml, lof.yaml),
+// listing its photos in display order (decisions 02/D6, 05/D5). The file name is the album's
+// name and address: lof.yaml → /galleries/lof/. image() checks each photo file exists and
+// lets Astro optimise it; a wrong file name fails the build.
 const galleries = defineCollection({
   loader: glob({ pattern: '*.yaml', base: './src/content/galleries' }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
-      photos: z.array(
-        z.object({
-          image: image(),                   // path relative to the .yaml file
-          caption: z.string().optional(),
-          alt: z.string().default(''),      // to write in feature 05
-        }),
-      ),
+      order: z.number().int(),              // card order on /galleries/, smallest first (05/D4)
+      description: z.string().optional(),   // a line on the card and under the album title
+      cover: image().optional(),            // the card's photo; default: the first photo
+      draft: z.boolean().default(false),    // true: visible in `npm run dev` only
+      photos: z
+        .array(
+          z.object({
+            image: image(),                 // path relative to the .yaml file
+            caption: z.string().optional(), // the story: gives the photo a ¶ mark (05/D6)
+            alt: z.string().default(''),    // what the photo shows, for screen readers
+          }),
+        )
+        .min(1),
     }),
 });
 
