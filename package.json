@@ -9,6 +9,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "clean": "rm -f node_modules/.astro/data-store.json .astro/data-store.json",
     "astro": "astro"
   },
   "dependencies": {

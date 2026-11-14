@@ -6,7 +6,6 @@ lang: en
 ---
 
 ![a phone lying among green plants](@images/wallpaper-of-our-life/phone-white.avif)
-
 *sumber gambar: freepik*
 
 Seberapa sering dirimu *aware* atau sadar sama *wallpaper* hape?

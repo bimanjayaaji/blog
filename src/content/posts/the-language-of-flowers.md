@@ -6,7 +6,6 @@ lang: id
 ---
 
 ![kung fu panda flowers](@images/the-language-of-flowers/flower-panda.jpg)
-
 *[sumber gambar](https://wall.alphacoders.com/big.php?i=1344939)*
 
 Buat apa ya kita dikasih nama? Kata orang nama adalah doa. Kata-katanya juga, nama bisa jadi ramalan. Kata yang lain, nama cuma sebatas identitas, *nothing more*. Ya tapi kalo ga punya nama juga bakal bingung sih gimana manggilnya. Kalo dulu Adam sama Hawa gak dikasih nama nanti manggilnya "heh heh" sambil "ckckckckck".

@@ -6,7 +6,6 @@ lang: id
 ---
 
 ![sunrise from andong](@images/persami/andong-fando.jpg)
-
 *foto dari [@suryawanrifando](http://x.com/suryawanrifando "@suryawanrifando")*
 
 (*Post dari blog lama. Iya, dulu sempet punya blog tapi udah bangkrut, terus tutup*. *Ini cerita tentang naik-naik ke puncak gunung tahun 2022*)
@@ -19,21 +18,21 @@ Penantian oleh banyak kalangan ini bukan tanpa alasan. Banyak aktivitas dalam ke
 
 Namun pada tulisan kali ini — yang bertema “Where do you wish to travel next?” — saya tidak akan bercerita tentang kegiatan Perkemahan Sabtu Malam Minggu, boro-boro Sabtu Malam Jumat atau Sabtu Malam Seribu Bintang. Melainkan saya akan sedikit banyak mengoceh tentang kegiatan Persami yang tidak ada hubungannya dengan sekolah.
 
-![chat dari friska](@images/persami/whatsapp-image-2023-03-21-at-21-20-00-1-1-1.jpg)
+![chat dari friska](@images/persami/whatsapp-image-2023-03-21-at-21-20-00-1-1-1.jpg){.small}
 
 Kutipan pesan Whatsapp di atas adalah awal mula atau pengantar petualangan baru saya untuk berkenalan dengan aktivitas yang sungguh di luar dugaan akan menggoreskan kesan cukup mendalam dalam hidup saya. Ya, naik andong.
 
-![mainan andong](@images/persami/pasted-image-20250209194532.png)
+![mainan andong](@images/persami/pasted-image-20250209194532.png){.small}
 
 Maaf, salah gambar. Maksud saya adalah Gunung Andong.
 
-![gunung andong](@images/persami/21d-gunung-andong.jpg)
+![gunung andong](@images/persami/21d-gunung-andong.jpg){.small}
 
 Sebelum ajakan ini tiba, saya pikir hidup saya tidak terlalu bervariasi dalam hal kegiatan, dan wilayah yang biasa saya kunjungi untuk berbagai urusan pun tidak terlalu luas atau banyak. Rumah-kampus/lab, kampus/lab-rumah. Jalan-jalan pun hanya sekitaran Semarang dan mungkin paling jauh sebatas Ungaran. Luar kota? Paling-paling kalau ada acara atau urusan keluarga saja. *So, this kind of invitation is totally new for me!*
 
 Tentu saja, awalnya saya ragu untuk mengiyakan. Mungkin tidak berlebihan kalau saya bilang “sangat ragu”! Tidak jarang ajakan “aneh-aneh” yang cukup melompat dari kebiasaan saya, langsung saya tolak. Apalagi, waktu itu saya masih di tengah proses mengerjakan Tugas Akhir. Namun, tidak tahu kenapa, setelah beberapa saat mendiamkan *chat* teman saya sembari berpikir — dan tentu saja memastikan jadwal — akhirnya saya membalas.
 
-![response to friska](@images/persami/whatsapp-image-2023-03-21-at-22-01-58-1.jpg)
+![response to friska](@images/persami/whatsapp-image-2023-03-21-at-22-01-58-1.jpg){.small}
 
 Saya memberanikan diri untuk terpapar pada berbagai hal baru. Sebelumnya, saya hanya pergi jauh kalau memang jadi kewajiban atau betul-betul perlu saja. Jadi, menyetir mobil SENDIRI ke luar kota — karena waktu itu titik kumpulnya di Jogja — ke daerah yang 100% ASING bagi saya, atas kemauan saya sendiri untuk nantinya berjalan MENANJAK, mendaki gunung — waktu itu saya masih jUarang olahraga — masuk ke hutan liar, dan tidak lupa membawa tas yang beratnya sampai BELASAN kilogram; semua ini merupakan hal yang anyar gres.
 

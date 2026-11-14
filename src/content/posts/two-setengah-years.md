@@ -10,7 +10,6 @@ Ini adalah refleksi gue － yes, I'm using gue － menelisik isi hati dan pikira
 I would not lie, it has been fun! So fun that I could not believe that I'm "jobbing" this job. You can say that this is what I wanted to do for a living, back then when I was still "kuliahing" and "ngoprekking" mechatronics stuffs in university.
 
 ![me working](@images/two-setengah-years/jobbing-job.jpg)
-
 *me jobbing my job*
 
 Sudah cukup lama gue tertarik dengan the way alam bekerja. Tidak sebentar juga that I've been amazed by how us, humans, utilizes every law of nature to make something really-really cool. Dari hal "remeh" seperti sendok, garpu, pun hal lain seperti motor, peluru, internet, sampai roket. Dan robot. *Automation*.

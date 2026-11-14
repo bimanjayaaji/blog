@@ -6,7 +6,6 @@ lang: id
 ---
 
 ![flying motor CJ](@images/tantangan-bikin-motor-terbang/motor-terbang.jpg)
-
 *[sumber gambar](https://www.gtaall.com/gta-san-andreas/cleo/139556-bike-fly.html)*
 
 Pada bulan puasa yang penuh perenungan ini － walaupun saya ga ikut puasa🙏🏽 － saya mau mengajak kita sedikit berpikir, mengevaluasi diri, hati, dan pikiran kita yang *funny*, eh, fana ini.

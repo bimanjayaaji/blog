@@ -9,6 +9,7 @@
  *     <h1>About</h1> ...
  *   </BaseLayout>
  */
+import { Font } from 'astro:assets';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE } from '../config';
@@ -31,9 +32,31 @@ const fullTitle = title ? `${title} · ${SITE.name}` : SITE.name;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <!-- Tab icon. Browsers that understand SVG use favicon.svg; others favicon.ico (sizes="32x32"
+         stops some from preferring the .ico). Browsers cache icons hard: after changing either
+         file, bump ?v= so they fetch it again. -->
+    <link rel="icon" href="/favicon.ico?v=2" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
     <meta name="generator" content={Astro.generator} />
+
+    <!--
+      Dark mode: re-apply the reader's saved choice (light/dark, from the header toggle)
+      before anything is drawn. It's inline (not a separate file) and sits in <head> so it
+      runs first: otherwise a dark-mode reader would see a white flash on every page.
+      No saved choice → nothing set → the page follows the system setting.
+      try/catch: some private windows block localStorage.
+    -->
+    <script is:inline>
+      try {
+        const theme = localStorage.getItem('theme');
+        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+      } catch {}
+    </script>
+
+    <!-- Fonts (astro.config.mjs): @font-face rules. preload = start downloading early, only
+         for the files every page needs at once (italic and bold load when first used). -->
+    <Font cssVariable="--font-lora" preload={[{ style: 'normal' }]} />
+    <Font cssVariable="--font-courier-prime" preload={[{ weight: 400 }]} />
   </head>
   <body>
     <Header />
@@ -49,7 +72,7 @@ const fullTitle = title ? `${title} · ${SITE.name}` : SITE.name;
   main {
     flex: 1;                     /* take the leftover height, pushing the footer down */
     width: 100%;
-    max-width: var(--measure);
+    max-width: calc(var(--width-text) + 2 * var(--gutter));   /* the padding sits inside max-width */
     margin-inline: auto;
     padding: var(--space-l) var(--gutter) var(--space-xl);
   }

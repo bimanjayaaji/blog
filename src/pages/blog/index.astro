@@ -1,6 +1,6 @@
 ---
-// The blog list: every post, newest first. Plain for now; the blog-index feature
-// adds grouping by year, tags and reading time.
+// The blog list: every post, newest first. It's also the site's front page ("/" forwards
+// here, 03/D5). The blog-index feature adds grouping by year, tags and reading time.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getPosts, postUrl, formatDate } from '../../lib/posts';
 
@@ -49,8 +49,20 @@ const posts = await getPosts();
     }
   }
 
+  /* Titles in the text colour, teal when pointed at (03/S4): calmer than 13 underlined links. */
+  .post-list a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .post-list a:hover,
+  .post-list a:focus-visible {
+    color: var(--color-accent);
+  }
+
   .post-list time {
     color: var(--color-muted);
+    font-family: var(--font-ui);
     font-size: var(--text-s);
   }
 

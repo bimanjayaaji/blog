@@ -17,6 +17,7 @@ npm run dev      # dev server at http://localhost:4321, reloads on save
 | `npm run dev` | Dev server with live reload. Shows drafts. |
 | `npm run build` | Build the finished site into `dist/`. Leaves drafts out. |
 | `npm run preview` | Serve `dist/` locally, to check the build before publishing |
+| `npm run clean` | Delete Astro's cache of rendered posts (after changing Markdown settings or plugins) |
 
 ## Write a post
 
@@ -57,13 +58,38 @@ Put a post's photos in `src/assets/images/<slug>/` and refer to them with the `@
 
 - The text in `[…]` describes the photo for people who can't see it (screen readers, slow connections). Always fill it in.
 - Use full-size photos straight from the camera or phone. The build makes resized WebP versions (640–1920 px wide) and each reader's browser downloads the one that fits their screen.
-- Photos are shown as wide as the text column. Markdown can't size an image, and an HTML `<img>` tag in a post is **not** optimised (and its path won't work), so stick to `![…](…)`.
+- Photos are shown as wide as the text column, and never taller than 80% of the screen (tall portraits shrink and are centred). An HTML `<img>` tag in a post is **not** optimised (and its path won't work), so stick to `![…](…)`.
+- **Sizes:** add `{.small}` (at most half the column, centred: screenshots, small images) or `{.wide}` (wider than the text, on big screens) right after the image:
+  ```markdown
+  ![chat from a friend](@images/persami/chat.jpg){.small}
+  ![the mountain](@images/persami/andong.jpg){.wide}
+  ```
+- **Caption:** an italic line *directly* under the photo, with no blank line between. Links work in it:
+  ```markdown
+  ![sunrise](@images/persami/sunrise.jpg)
+  *photo by [@someone](https://x.com/someone)*
+  ```
+- **Side by side:** image lines directly under each other, no blank line (2 or 3 photos; they stack on phones). A caption line can follow; `{.wide}` on any of them makes the whole row wide.
+  ```markdown
+  ![pos 1](@images/persami/pos-1.jpg)
+  ![the top](@images/persami/top.jpg)
+  ```
+- A blank line between two images (or an image and an italic line) keeps them separate, as before.
+- After changing anything in `astro.config.mjs` or `src/plugins/` (not needed for posts): `npm run clean`, then restart `npm run dev` / rebuild. Astro caches rendered posts and wouldn't notice.
 - Don't put photos in `public/`: files there are served as-is, without resizing.
 
 ## The About page and the galleries
 
-- **About:** the text (bio, book and show lists) is `src/content/pages/about.md`; edit it like a post. The photo and the Instagram / LinkedIn / Goodreads links are in `src/pages/about.astro`.
+- **About:** the text (bio, book and show lists) is `src/content/pages/about.md`; edit it like a post. The photo is in `src/pages/about.astro`. The Instagram / LinkedIn / Goodreads links (footer icons) and the menu are in `src/config.ts` (`SOCIAL`, `NAV`).
 - **Galleries:** `src/content/galleries/gallery.yaml` and `lof.yaml` list each gallery's photos in display order, with optional `caption` and `alt`. The photos are in `src/assets/galleries/<gallery|lof>/`. To add one, copy the photo in and add a `- image: ../../assets/galleries/lof/<file>` line where it should appear. A wrong file name stops the build. No page shows the galleries yet (planned).
+
+## The look
+
+- **Fonts:** Lora for text, Courier Prime for the name, menu and dates. Set in `astro.config.mjs` (`fonts`); Astro downloads them when building and serves them from the site itself.
+- **Colours, sizes, widths:** the tokens at the top of `src/styles/global.css`. Each colour is written `light-dark(<light>, <dark>)`; the accent is the old site's teal `#007392` (`#56b6d0` in dark mode).
+- **Dark mode:** follows the reader's system until they click the sun/moon; their choice is remembered in their browser.
+- **Menu:** `NAV` in `src/config.ts`. The numbers ("01 : Blog") come from the order, so a new entry renumbers itself.
+- **Favicon:** `public/favicon.svg` and `favicon.ico`. After replacing them, bump `?v=` in `src/layouts/BaseLayout.astro` (browsers cache icons hard).
 
 ## Layout
 
@@ -76,12 +102,12 @@ Put a post's photos in `src/assets/images/<slug>/` and refer to them with the `@
 | `src/assets/galleries/` | Gallery photos, one folder per gallery |
 | `src/pages/` | One file per page; the file path is the URL (`about.astro` → `/about/`). `blog/[slug].astro` builds one page per post. |
 | `src/layouts/` | Page shells: `BaseLayout` (every page), `PostLayout` (posts) |
-| `src/components/` | Header, Footer |
-| `src/styles/global.css` | Design tokens (colours, fonts, spacing) and base styles |
-| `src/config.ts` | Site name, description, nav links |
+| `src/components/` | Header (numbered menu), ThemeToggle (sun/moon), Footer, SocialLinks (icons) |
+| `src/styles/global.css` | Design tokens (colours light + dark, fonts, sizes, widths), base styles, photo figures |
+| `src/config.ts` | Site name, description, menu (`NAV`), social links (`SOCIAL`) |
 | `src/content.config.ts` | The rules for post frontmatter, page text and gallery lists |
-| `src/plugins/` | A Markdown plugin that gives images their real display size |
-| `public/` | Files copied as-is to the site root (favicon) |
-| `astro.config.mjs` | Astro settings (image sizes, Markdown processing) |
+| `src/plugins/` | Markdown plugins: photos → figures (sizes, captions, rows); image size hints |
+| `public/` | Files copied as-is to the site root (favicon: "b." on teal) |
+| `astro.config.mjs` | Astro settings: fonts, `/` → `/blog/`, image sizes, code colours, Markdown processing |
 | `scripts/wp-import/` | One-off scripts that imported the old WordPress site (from `wp-archive/`, not in git) |
 | `dev/` | Development notes: features, stages, decisions. Start at [dev/README.md](dev/README.md) |
