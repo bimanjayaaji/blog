@@ -9,7 +9,7 @@ Ini adalah refleksi gue － yes, I'm using gue － menelisik isi hati dan pikira
 
 I would not lie, it has been fun! So fun that I could not believe that I'm "jobbing" this job. You can say that this is what I wanted to do for a living, back then when I was still "kuliahing" and "ngoprekking" mechatronics stuffs in university.
 
-![](@images/two-setengah-years/jobbing-job.jpg)
+![me working](@images/two-setengah-years/jobbing-job.jpg)
 
 *me jobbing my job*
 

@@ -5,7 +5,7 @@ tags: [story]
 lang: id
 ---
 
-![](@images/find-an-old-photograph-you-like-and-share-the-story-behind-it/ajik-drama.webp)
+![me performing on stage](@images/find-an-old-photograph-you-like-and-share-the-story-behind-it/ajik-drama.webp)
 
 (*Post dari blog lama. Iya, dulu sempet punya blog tapi udah bangkrut, terus tutup*)
 
@@ -23,7 +23,7 @@ Hal yang cukup saya takutkan pun terjadi, saya lupa skrip dialog! Padahal drama 
 
 Ketika drama selesai, dan narator sedang membacakan paragraf terakhir, tiba-tiba saja musik berubah jadi nge-beat dan secara spontan akhirnya drama ditutup dengan joget bersama semua pemeran. Untung saja fotografer “gercep” dan momen memalukan ini pun terabadikan.
 
-![](@images/find-an-old-photograph-you-like-and-share-the-story-behind-it/ajik-drama-goyang.webp)
+![me dancing with friends](@images/find-an-old-photograph-you-like-and-share-the-story-behind-it/ajik-drama-goyang.webp)
 
 Sepertinya drama ini jadi pembuka perjalanan saya menuju drama-drama lainnya.
 

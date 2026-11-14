@@ -5,7 +5,7 @@ tags: [books]
 lang: id
 ---
 
-![](@images/the-language-of-flowers/flower-panda.jpg)
+![kung fu panda flowers](@images/the-language-of-flowers/flower-panda.jpg)
 
 *[sumber gambar](https://wall.alphacoders.com/big.php?i=1344939)*
 

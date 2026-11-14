@@ -5,7 +5,7 @@ tags: [verses]
 lang: en
 ---
 
-![](@images/not-lost/take-me-home-sweater.webp)
+![a grey sweatshirt printed with “Take me HOME”, on a hanger](@images/not-lost/take-me-home-sweater.webp)
 
 (*Post dari blog lama. Iya, dulu sempet punya blog tapi udah bangkrut, terus tutup*)
 

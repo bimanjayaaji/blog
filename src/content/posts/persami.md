@@ -5,7 +5,7 @@ tags: [story]
 lang: id
 ---
 
-![](@images/persami/andong-fando.jpg)
+![sunrise from andong](@images/persami/andong-fando.jpg)
 
 *foto dari [@suryawanrifando](http://x.com/suryawanrifando "@suryawanrifando")*
 
@@ -19,33 +19,33 @@ Penantian oleh banyak kalangan ini bukan tanpa alasan. Banyak aktivitas dalam ke
 
 Namun pada tulisan kali ini — yang bertema “Where do you wish to travel next?” — saya tidak akan bercerita tentang kegiatan Perkemahan Sabtu Malam Minggu, boro-boro Sabtu Malam Jumat atau Sabtu Malam Seribu Bintang. Melainkan saya akan sedikit banyak mengoceh tentang kegiatan Persami yang tidak ada hubungannya dengan sekolah.
 
-![](@images/persami/whatsapp-image-2023-03-21-at-21-20-00-1-1-1.jpg)
+![chat dari friska](@images/persami/whatsapp-image-2023-03-21-at-21-20-00-1-1-1.jpg)
 
 Kutipan pesan Whatsapp di atas adalah awal mula atau pengantar petualangan baru saya untuk berkenalan dengan aktivitas yang sungguh di luar dugaan akan menggoreskan kesan cukup mendalam dalam hidup saya. Ya, naik andong.
 
-![](@images/persami/pasted-image-20250209194532.png)
+![mainan andong](@images/persami/pasted-image-20250209194532.png)
 
 Maaf, salah gambar. Maksud saya adalah Gunung Andong.
 
-![](@images/persami/21d-gunung-andong.jpg)
+![gunung andong](@images/persami/21d-gunung-andong.jpg)
 
 Sebelum ajakan ini tiba, saya pikir hidup saya tidak terlalu bervariasi dalam hal kegiatan, dan wilayah yang biasa saya kunjungi untuk berbagai urusan pun tidak terlalu luas atau banyak. Rumah-kampus/lab, kampus/lab-rumah. Jalan-jalan pun hanya sekitaran Semarang dan mungkin paling jauh sebatas Ungaran. Luar kota? Paling-paling kalau ada acara atau urusan keluarga saja. *So, this kind of invitation is totally new for me!*
 
 Tentu saja, awalnya saya ragu untuk mengiyakan. Mungkin tidak berlebihan kalau saya bilang “sangat ragu”! Tidak jarang ajakan “aneh-aneh” yang cukup melompat dari kebiasaan saya, langsung saya tolak. Apalagi, waktu itu saya masih di tengah proses mengerjakan Tugas Akhir. Namun, tidak tahu kenapa, setelah beberapa saat mendiamkan *chat* teman saya sembari berpikir — dan tentu saja memastikan jadwal — akhirnya saya membalas.
 
-![](@images/persami/whatsapp-image-2023-03-21-at-22-01-58-1.jpg)
+![response to friska](@images/persami/whatsapp-image-2023-03-21-at-22-01-58-1.jpg)
 
 Saya memberanikan diri untuk terpapar pada berbagai hal baru. Sebelumnya, saya hanya pergi jauh kalau memang jadi kewajiban atau betul-betul perlu saja. Jadi, menyetir mobil SENDIRI ke luar kota — karena waktu itu titik kumpulnya di Jogja — ke daerah yang 100% ASING bagi saya, atas kemauan saya sendiri untuk nantinya berjalan MENANJAK, mendaki gunung — waktu itu saya masih jUarang olahraga — masuk ke hutan liar, dan tidak lupa membawa tas yang beratnya sampai BELASAN kilogram; semua ini merupakan hal yang anyar gres.
 
 Oh tidak lupa juga satu hal yang awalnya menjadi poin besar yang membuat saya hampir menolak ajakan ini. Berkenalan dan berteman dengan orang baru. Terdokumentasi dari foto di bawah ini.
 
-![](@images/persami/img-3972-compressed.jpg)
+![traveller andong](@images/persami/img-3972-compressed.jpg)
 
 Saya merangkum proses awal pendakian ini dalam satu kata: “kaget”. Kaki saya yang hanya terbiasa naik puluhan anak tangga di kampus kaget diperhadapkan dengan ribuan — mungkin ratusan ribu — anak tangga dari batu dan tanah. Jantung dan paru-paru saya yang tidak terbiasa *jogging* lebih dari 30 menit kaget harus berjalan menanjak selama berjam-jam. Pundak dan punggung saya yang hanya terbiasa duduk seharian menghadap laptop kaget harus menggendong tas yang beratnya hampir — kalau tidak sama atau lebih — seperti galon.
 
 Saya seperti sedang ikut MotoGP tapi bermodal motor mio 2006. Ya, memang sebelum balapan saya sudah sedikit memodif mesin motor mio 2006 ini. Namun, sepertinya saya masih terlalu menyepelekan. Berikut dokumentasi kaki, pundak, punggung, serta wajah gimmick saya ketika sampai di Pos 1 yang menurut saya namanya cukup wadidaw.
 
-![](@images/persami/img-3978-compressed.jpg)
+![pos 1 andong](@images/persami/img-3978-compressed.jpg)
 
 Pendakian ini juga diiringi beberapa kejadian yang membuat bulu hidung berdiri. Mulai dari penglihatan satu teman yang mulai berkunang-kunang karena kecapekan, handphone yang nyaris saja hilang karena hampir jatuh ke jurang, sampai hujan lebat yang berlangsung cukup lama ketika sampai di Pos 3 yang membuat kami harus berteduh menunggu cuaca mereda.
 
@@ -77,7 +77,7 @@ Kalau bisa sih pas malam minggu juga ya, biar namanya jadi Persami. Perkemahan S
 
 Bonus foto di puncak, full senyum.
 
-![](@images/persami/img-4138-compressed.jpg)
+![puncak andong](@images/persami/img-4138-compressed.jpg)
 
 > The struggle itself towards the heights is enough to fill a man’s heart. One must imagine Sisyphus happy
 >

@@ -5,7 +5,7 @@ tags: [story]
 lang: id
 ---
 
-![](@images/write-about-things-or-activities-that-make-you-happy/ajik-at-kuta.webp)
+![me at kuta](@images/write-about-things-or-activities-that-make-you-happy/ajik-at-kuta.webp)
 
 (*Post dari blog lama. Iya, dulu sempet punya blog tapi udah bangkrut, terus tutup*)
 

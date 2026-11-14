@@ -5,7 +5,7 @@ tags: [thoughts]
 lang: id
 ---
 
-![](@images/beige-flag/beige-color.webp)
+![jaring krem](@images/beige-flag/beige-color.webp)
 
 *src: wikipedia*
 

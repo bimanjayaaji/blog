@@ -5,7 +5,7 @@ tags: [thoughts]
 lang: en
 ---
 
-![](@images/wallpaper-of-our-life/phone-white.avif)
+![a phone lying among green plants](@images/wallpaper-of-our-life/phone-white.avif)
 
 *sumber gambar: freepik*
 

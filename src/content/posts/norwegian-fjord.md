@@ -15,7 +15,7 @@ Waktu ku-googling, ternyata ini definisinya
 
 Terus ini contoh foto aktualnya
 
-![](@images/norwegian-fjord/fjord.jpg)
+![norwegian fjord](@images/norwegian-fjord/fjord.jpg)
 
 *(sumber gambar: google. ini guys yang namanya fjord.. jadi pengen liburan)*
 

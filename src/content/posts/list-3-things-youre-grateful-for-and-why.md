@@ -5,7 +5,7 @@ tags: [story]
 lang: id
 ---
 
-![](@images/list-3-things-youre-grateful-for-and-why/ki-hadjar-book.webp)
+![buku ki hadjar](@images/list-3-things-youre-grateful-for-and-why/ki-hadjar-book.webp)
 
 (*Post dari blog lama. Iya, dulu sempet punya blog tapi udah bangkrut, terus tutup*)
 

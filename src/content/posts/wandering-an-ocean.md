@@ -5,7 +5,7 @@ tags: [verses]
 lang: en
 ---
 
-![](@images/wandering-an-ocean/marinasunset.webp)
+![a boat on marina beach](@images/wandering-an-ocean/marinasunset.webp)
 
 \
 (*Post dari blog lama. Iya, dulu sempet punya blog tapi udah bangkrut, terus tutup*)

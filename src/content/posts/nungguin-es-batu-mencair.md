@@ -5,7 +5,7 @@ tags: [thoughts]
 lang: id
 ---
 
-![](@images/nungguin-es-batu-mencair/estehcroppedideal.jpg)
+![dad and me](@images/nungguin-es-batu-mencair/estehcroppedideal.jpg)
 
 Satu sore di ruang tamu, bapakku dan aku sedang "leyeh-leyeh" di tengah gerahnya udara sawah musim kemarau. Di depan kami, segelas es teh duduk di meja, sebuah bentuk perlawanan terhadap realita hawa panas. Aku ingat dengan cukup baik kata-kata apa yang keluar dari mulut bapak di tengah leyeh-leyeh itu. Umurku mungkin 10 tahun.
 

@@ -21,4 +21,14 @@ const posts = defineCollection({
   }),
 });
 
-export const collections = { posts };
+// Pages whose text is kept in Markdown, so it's edited like a post: src/content/pages/about.md.
+// The page's layout (photo, links) stays in its .astro file in src/pages/ (decision 02/D7).
+const pages = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/pages' }),
+  schema: z.object({
+    title: z.string(),
+    lang: z.enum(['en', 'id']).default('en'),
+  }),
+});
+
+export const collections = { posts, pages };

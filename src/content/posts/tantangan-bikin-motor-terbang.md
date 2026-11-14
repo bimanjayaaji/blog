@@ -5,7 +5,7 @@ tags: [thoughts]
 lang: id
 ---
 
-![](@images/tantangan-bikin-motor-terbang/motor-terbang.jpg)
+![flying motor CJ](@images/tantangan-bikin-motor-terbang/motor-terbang.jpg)
 
 *[sumber gambar](https://www.gtaall.com/gta-san-andreas/cleo/139556-bike-fly.html)*
 
