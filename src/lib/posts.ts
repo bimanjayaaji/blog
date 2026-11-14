@@ -10,7 +10,23 @@ export type Post = CollectionEntry<'posts'>;
  */
 export async function getPosts(): Promise<Post[]> {
   const posts = await getCollection('posts', (post) => import.meta.env.DEV || !post.data.draft);
+  for (const post of posts) checkPostName(post);
   return posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+}
+
+/**
+ * Some addresses under /blog/ belong to other pages: /blog/2025/ (a year, 04/D4) and
+ * /blog/tag/ (the tags). A post file with such a name would collide with them, so the
+ * build stops here with a message instead of quietly showing the wrong page.
+ */
+function checkPostName(post: Post): void {
+  if (/^\d{4}$/.test(post.id) || post.id === 'tag') {
+    throw new Error(
+      `The post file "src/content/posts/${post.id}.md" can't be called "${post.id}": ` +
+        `/blog/${post.id}/ is already used for ${post.id === 'tag' ? 'the tags page' : "that year's page"}. ` +
+        `Rename the file (e.g. "${post.id}-${post.id === 'tag' ? 'post' : 'recap'}.md").`,
+    );
+  }
 }
 
 /** The URL of a post's page. */
