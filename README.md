@@ -18,6 +18,7 @@ npm run dev      # dev server at http://localhost:4321, reloads on save
 | `npm run build` | Build the finished site into `dist/`. Leaves drafts out. |
 | `npm run preview` | Serve `dist/` locally, to check the build before publishing |
 | `npm run clean` | Delete Astro's cache of rendered posts (after changing Markdown settings or plugins) |
+| `npm run gallery <name>` | Create or extend a photo album's list from its folder (see [Galleries](#galleries)) |
 
 ## Write a post
 
@@ -92,10 +93,53 @@ Put a post's photos in `src/assets/images/<slug>/` and refer to them with the `@
 - After changing anything in `astro.config.mjs` or `src/plugins/` (not needed for posts): `npm run clean`, then restart `npm run dev` / rebuild. Astro caches rendered posts and wouldn't notice.
 - Don't put photos in `public/`: files there are served as-is, without resizing.
 
-## The About page and the galleries
+## The About page
 
-- **About:** the text (bio, book and show lists) is `src/content/pages/about.md`; edit it like a post. The photo is in `src/pages/about.astro`. The Instagram / LinkedIn / Goodreads links (footer icons) and the menu are in `src/config.ts` (`SOCIAL`, `NAV`).
-- **Galleries:** `src/content/galleries/gallery.yaml` and `lof.yaml` list each gallery's photos in display order, with optional `caption` and `alt`. The photos are in `src/assets/galleries/<gallery|lof>/`. To add one, copy the photo in and add a `- image: ../../assets/galleries/lof/<file>` line where it should appear. A wrong file name stops the build. No page shows the galleries yet (planned).
+The text (bio, book and show lists) is `src/content/pages/about.md`; edit it like a post. The photo is in `src/pages/about.astro`. The Instagram / LinkedIn / Goodreads links (footer icons) and the menu are in `src/config.ts` (`SOCIAL`, `NAV`).
+
+## Galleries
+
+"02 : Galleries" opens `/galleries/`: one card per album. Each album has its own page, `/galleries/<name>/`: its photos in rows (left to right, nothing cropped), a full-screen view on click, and a **¶ story** mark on photos with a caption.
+
+An album is **one folder of photos + one list file**, with the same name:
+
+```
+src/assets/galleries/jogja-2026/     ← the photos
+src/content/galleries/jogja-2026.yaml  ← the list: title, order, photos in display order
+```
+
+The name becomes the address, so only lowercase letters, digits and `-`. (`jogja-2026` is just an example.)
+
+A list file:
+
+```yaml
+title: "A Weekend in Jogja"
+order: 3                       # the card's place on /galleries/, smallest first
+description: "Two days, one roll of film."    # optional: a line on the card and the album page
+cover: ../../assets/galleries/jogja-2026/tugu.jpg   # optional: the card's photo (default: the first)
+draft: true                    # optional: shown in `npm run dev` only, until you remove it
+photos:                        # keep this the last field (the helper adds photos at the end)
+  - image: ../../assets/galleries/jogja-2026/tugu.jpg
+  - image: ../../assets/galleries/jogja-2026/malioboro.jpg
+    caption: "the story behind it (gives the photo a ¶ story mark)"
+    alt: "A busy street at dusk"   # what the photo shows, for screen readers
+```
+
+| I want to… | Do this |
+|---|---|
+| Make a new album | Make the folder `src/assets/galleries/<name>/`, put the photos in, run `npm run gallery <name>`. It writes the list with every photo (by file name), a title from the name and the next free `order`. Edit the title. |
+| Add photos | Put them in the album's folder, run `npm run gallery <name>` again. New ones are added at the end; nothing already listed changes. |
+| Reorder photos | Move lines in the `.yaml` (an `- image:` line together with its `caption:`/`alt:` lines). |
+| Tell a photo's story | Add `caption: "…"` under it. |
+| Remove a photo | Delete its lines, and the file. |
+| Change the cover or the card order | `cover:` / `order:` (gaps are fine: 10, 20, 30 leaves room). |
+| Hide an album while working on it | `draft: true` |
+| Delete an album | Delete its folder and its `.yaml`. |
+
+- **Photo size:** any size works for visitors: the build makes small AVIF/WebP versions and the full-screen view uses one at most 1600 px wide. Big originals only make the repo heavier (git keeps every photo forever), so export at **about 2400 px on the long side** before adding. The helper warns above ~3000 px or ~2 MB; it never changes your files.
+- **Mistakes the build catches:** a photo path that doesn't exist, a missing `title` or `order`, an album name that can't be an address. It stops and names the file. The helper also warns about listed photos that are missing.
+- **The first build after adding photos** takes a while (it makes all the sizes, ~1 s per photo); later builds reuse them.
+- **The layout** is the same for every album, in `src/components/PhotoRows.astro` (rows) and `PhotoViewer.astro` (full-screen view).
 
 ## The look
 
@@ -111,18 +155,20 @@ Put a post's photos in `src/assets/images/<slug>/` and refer to them with the `@
 |---|---|
 | `src/content/posts/` | The posts (Markdown) |
 | `src/content/pages/` | Page text kept in Markdown (`about.md`) |
-| `src/content/galleries/` | Gallery lists (`gallery.yaml`, `lof.yaml`) |
+| `src/content/galleries/` | Album lists, one `.yaml` per album (`gallery.yaml`, `lof.yaml`) |
 | `src/assets/images/` | Photos used in posts, one folder per post; `about/` for the About photo |
-| `src/assets/galleries/` | Gallery photos, one folder per gallery |
-| `src/pages/` | One file per page; the file path is the URL (`about.astro` → `/about/`). `blog/[slug].astro` builds one page per post, `blog/[year].astro` one per year, `blog/tag/[tag].astro` one per tag; `blog/tag/index.astro` is the tag list. |
+| `src/assets/galleries/` | Album photos, one folder per album |
+| `src/pages/` | One file per page; the file path is the URL (`about.astro` → `/about/`). `blog/[slug].astro` builds one page per post, `blog/[year].astro` one per year, `blog/tag/[tag].astro` one per tag; `blog/tag/index.astro` is the tag list. `galleries/index.astro` is the album cards, `galleries/[album].astro` one page per album. |
 | `src/layouts/` | Page shells: `BaseLayout` (every page), `PostLayout` (posts) |
-| `src/components/` | Header (numbered menu), ThemeToggle (sun/moon), Footer, SocialLinks (icons), PostList (the year-grouped list on the blog, tag and year pages) |
+| `src/components/` | Header (numbered menu), ThemeToggle (sun/moon), Footer, SocialLinks (icons), PostList (the year-grouped list on the blog, tag and year pages), PhotoRows (an album's photos), PhotoViewer (the full-screen view) |
 | `src/styles/global.css` | Design tokens (colours light + dark, fonts, sizes, widths), base styles, photo figures, list-page headings |
 | `src/lib/posts.ts` | Helpers for posts: the post list (drafts in dev only), dates, years, tags and their addresses |
+| `src/lib/galleries.ts` | Helpers for albums: the album list in `order` (drafts in dev only), addresses, covers, photo counts |
 | `src/config.ts` | Site name, description, menu (`NAV`), social links (`SOCIAL`) |
 | `src/content.config.ts` | The rules for post frontmatter, page text and gallery lists |
 | `src/plugins/` | Markdown plugins: photos → figures (sizes, captions, rows); image size hints |
 | `public/` | Files copied as-is to the site root (favicon: "b." on teal) |
 | `astro.config.mjs` | Astro settings: fonts, `/` → `/blog/`, image sizes, code colours, Markdown processing |
+| `scripts/gallery.mjs` | `npm run gallery <name>`: creates or extends an album's list |
 | `scripts/wp-import/` | One-off scripts that imported the old WordPress site (from `wp-archive/`, not in git) |
 | `dev/` | Development notes: features, stages, decisions. Start at [dev/README.md](dev/README.md) |
