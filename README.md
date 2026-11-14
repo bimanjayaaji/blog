@@ -95,7 +95,7 @@ Put a post's photos in `src/assets/images/<slug>/` and refer to them with the `@
 
 ## The About page
 
-The text (bio, book and show lists) is `src/content/pages/about.md`; edit it like a post. The photo is in `src/pages/about.astro`. The Instagram / LinkedIn / Goodreads links (icons under the About photo and in the footer) and the menu are in `src/config.ts` (`SOCIAL`, `NAV`).
+The text (bio, book and show lists) is `src/content/pages/about.md`; edit it like a post. Links to other websites in it open in a new tab by themselves (`src/plugins/markdown-external-links.mjs`); write them as usual, `[title](url)`. The photo is in `src/pages/about.astro`. The Instagram / LinkedIn / Goodreads links (icons under the About photo and in the footer) and the menu are in `src/config.ts` (`SOCIAL`, `NAV`).
 
 ## Galleries
 
@@ -166,7 +166,7 @@ photos:                        # keep this the last field (the helper adds photo
 | `src/lib/galleries.ts` | Helpers for albums: the album list in `order` (drafts in dev only), addresses, covers, photo counts |
 | `src/config.ts` | Site name, description, menu (`NAV`), social links (`SOCIAL`) |
 | `src/content.config.ts` | The rules for post frontmatter, page text and gallery lists |
-| `src/plugins/` | Markdown plugins: photos → figures (sizes, captions, rows); image size hints |
+| `src/plugins/` | Markdown plugins: photos → figures (sizes, captions, rows); image size hints; outside links in a new tab (About page only) |
 | `public/` | Files copied as-is to the site root (favicon: "b." on teal) |
 | `astro.config.mjs` | Astro settings: fonts, `/` → `/blog/`, image sizes, code colours, Markdown processing |
 | `scripts/gallery.mjs` | `npm run gallery <name>`: creates or extends an album's list |

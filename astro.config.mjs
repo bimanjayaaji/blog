@@ -3,6 +3,7 @@ import { defineConfig, fontProviders } from 'astro/config';
 import { satteri } from '@astrojs/markdown-satteri';
 import { markdownImageSizes } from './src/plugins/markdown-image-sizes.mjs';
 import { markdownFigures } from './src/plugins/markdown-figures.mjs';
+import { markdownExternalLinks } from './src/plugins/markdown-external-links.mjs';
 
 // Image widths to generate. The text column is at most 736px (46rem); ×2 for
 // high-density (retina) screens needs ~1472, covered by 1920. 1920 also leaves room
@@ -78,6 +79,8 @@ export default defineConfig({
           sizes: '(min-width: 48rem) 46rem, calc(100vw - 2rem)',
           widths: IMAGE_WIDTHS,
         }),
+        // Links to other websites open in a new tab: on the About page only (its book/show lists).
+        markdownExternalLinks({ folders: ['src/content/pages/'] }),
       ],
     }),
   },
