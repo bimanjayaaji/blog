@@ -2,7 +2,7 @@
 /*
  * npm run gallery <name>
  *
- * Creates or extends a photo album's list (decision 05/D9):
+ * Creates or extends a photo album's list:
  *   photos:  src/assets/galleries/<name>/      (you put them there)
  *   list:    src/content/galleries/<name>.yaml (this script writes it)
  *
@@ -10,7 +10,7 @@
  *   photo in the folder, sorted by file name.
  * - List exists: adds the photos that aren't listed yet at the end, sorted by file name.
  *   Lines already in the list are never changed or reordered; comments stay.
- * - Warns about listed photos whose file is missing, and about very large files (05/D10).
+ * - Warns about listed photos whose file is missing, and about very large files.
  *
  * Plain Node, no packages to install. Changes nothing but the one .yaml file.
  */
@@ -24,7 +24,7 @@ const PHOTOS_DIR = join(ROOT, 'src/assets/galleries');
 const LISTS_DIR = join(ROOT, 'src/content/galleries');
 const PHOTO_TYPES = /\.(jpe?g|png|webp|avif)$/i;
 const BIG_BYTES = 2 * 1024 * 1024;   // warn above ~2 MB…
-const BIG_PIXELS = 3000;             // …or above 3000 px on the long side (05/D10)
+const BIG_PIXELS = 3000;             // …or above 3000 px on the long side
 
 const fail = (message) => {
   console.error(`\n✗ ${message}\n`);
@@ -126,7 +126,7 @@ if (!existsSync(listFile)) {
   }
 }
 
-// ---------- 3. Size check (05/D10) ----------
+// ---------- 3. Size check ----------
 // Visitors never download these files (the site makes small versions), but git keeps
 // every photo forever, so very large ones make the repo heavy.
 for (const file of added) {

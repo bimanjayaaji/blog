@@ -1,6 +1,6 @@
 ---
 /*
- * PhotoViewer: the full-screen view for an album's photos (05/D7). Put it on a page after
+ * PhotoViewer: the full-screen view for an album's photos. Put it on a page after
  * <PhotoRows>; it reads the photos from those links, so there's no extra data to download.
  *
  * - <dialog> is the browser's own pop-up element: showModal() puts it above the page,
@@ -8,7 +8,7 @@
  * - Opening a photo shows its thumbnail at once (already downloaded for the page), then
  *   swaps in the big file when it has arrived. Only the photos actually opened are downloaded.
  * - ← → keys, ‹ › buttons, swipe on phones; ✕, Esc, a click beside the photo or the phone's
- *   Back button close it (05/D7).
+ *   Back button close it.
  * - Without JavaScript nothing here runs: each photo stays a plain link to its big file.
  */
 ---
@@ -181,7 +181,7 @@
     color: transparent;            /* no alt text drawn while the photo is on its way */
   }
 
-  /* The story (05/D6): long ones scroll inside a box instead of squeezing the photo. */
+  /* The story: long ones scroll inside a box instead of squeezing the photo. */
   .caption {
     max-width: 40rem;
     max-height: 30dvh;

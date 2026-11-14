@@ -3,7 +3,7 @@
  * Component-specific styles live in each component's own <style> block.
  *
  * 1. Design tokens  — every colour, font and spacing value the site uses.
- *                     Redesigning the site starts here (feature: site-look).
+ *                     Redesigning the site starts here.
  * 2. Reset          — removes browser defaults that get in the way.
  * 3. Base elements  — readable defaults for text, links, headings, code.
  * 4. Photos in posts — sizes, captions, rows (see src/plugins/markdown-figures.mjs).
@@ -12,7 +12,7 @@
 /* ---------- 1. Design tokens ---------- */
 
 /*
- * Light and dark mode (03/D3).
+ * Light and dark mode.
  * Each colour token is written as light-dark(<light value>, <dark value>). The browser
  * picks one according to `color-scheme`:
  *   - by default "light dark": it follows the reader's system setting;
@@ -30,10 +30,10 @@
   --color-text:    light-dark(#1f1f1f, #e4e4e0);
   --color-muted:   light-dark(#6b6b6b, #9aa1a5);   /* dates, captions, secondary text */
   --color-border:  light-dark(#e4e4e4, #2e3336);
-  --color-accent:  light-dark(#007392, #56b6d0);   /* links, current nav item: the old site's teal (03/D2) */
+  --color-accent:  light-dark(#007392, #56b6d0);   /* links, current nav item: the old site's teal */
   --color-code-bg: light-dark(#f4f4f4, #24282b);
 
-  /* Fonts (03/D1). --font-lora / --font-courier-prime come from astro.config.mjs `fonts`. */
+  /* Fonts. --font-lora / --font-courier-prime come from astro.config.mjs `fonts`. */
   --font-body: var(--font-lora);                   /* content: posts, About */
   --font-ui: var(--font-courier-prime);            /* site name, nav, dates, tags */
   --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;   /* code */
@@ -52,9 +52,9 @@
   --space-l: 2rem;
   --space-xl: 4rem;
 
-  /* Layout (03/D8). 1rem = the browser's base font size, 16px by default. */
+  /* Layout. 1rem = the browser's base font size, 16px by default. */
   --width-text: 46rem;          /* the reading column: ~70–75 characters per line in Lora */
-  --width-frame: 64rem;         /* header, footer (later: Previous/Next, wide photos) */
+  --width-frame: 64rem;         /* header, footer, Previous/Next, wide photos, photo albums */
   --gutter: var(--space-m);     /* side padding on small screens */
 }
 
@@ -180,10 +180,10 @@ hr {
   background-color: var(--color-code-bg);
 }
 
-/* ---------- 4. Photos in posts (src/plugins/markdown-figures.mjs, 03/D6) ---------- */
+/* ---------- 4. Photos in posts (src/plugins/markdown-figures.mjs) ---------- */
 
 /* Every photo: never wider than the column, never taller than 80% of the window.
-   A tall portrait then shrinks (keeping its shape) and is centred (BACKLOG B3). */
+   A tall portrait then shrinks (keeping its shape) and is centred. */
 figure img {
   width: auto;
   max-height: 80vh;
@@ -272,7 +272,7 @@ figcaption {
 
 /* ---------- 6. Helpers ---------- */
 
-/* Text for screen readers only: read aloud, not shown ("this photo has a story", 05/D6). */
+/* Text for screen readers only: read aloud, not shown (e.g. "this photo has a story"). */
 .visually-hidden {
   position: absolute;
   width: 1px;

@@ -11,14 +11,14 @@ const IMAGE_WIDTHS = [640, 960, 1280, 1920];
 
 // https://astro.build/config
 export default defineConfig({
-  // No home page (03/D5): the site opens on the blog list. In the built site Astro writes a
+  // No home page: the site opens on the blog list. In the built site Astro writes a
   // tiny dist/index.html that forwards straight to /blog/; a host like Cloudflare can turn
-  // this into a real server redirect later (feature 06).
+  // this into a real server redirect when the site is hosted.
   redirects: {
     '/': '/blog/',
   },
 
-  // Fonts (03/D1). Astro downloads the files from Fontsource while building and serves
+  // Fonts. Astro downloads the files from Fontsource while building and serves
   // them from this site (/_astro/fonts/…): readers never contact Google or Fontsource.
   // Each font becomes a CSS variable; global.css uses them in --font-body / --font-ui.
   // <Font> tags in BaseLayout.astro add the @font-face rules to every page.
@@ -65,7 +65,7 @@ export default defineConfig({
 
     // Sätteri is Astro's default Markdown processor; it's named here only to add a plugin.
     processor: satteri({
-      // attributes: lets a post write {.small} / {.wide} after an image (03/D6).
+      // attributes: lets a post write {.small} / {.wide} after an image.
       features: { attributes: true },
       hastPlugins: [
         // Photos → <figure>: sizes, captions, side-by-side rows. See the file for the syntax.

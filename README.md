@@ -170,5 +170,3 @@ photos:                        # keep this the last field (the helper adds photo
 | `public/` | Files copied as-is to the site root (favicon: "b." on teal) |
 | `astro.config.mjs` | Astro settings: fonts, `/` → `/blog/`, image sizes, code colours, Markdown processing |
 | `scripts/gallery.mjs` | `npm run gallery <name>`: creates or extends an album's list |
-| `scripts/wp-import/` | One-off scripts that imported the old WordPress site (from `wp-archive/`, not in git) |
-| `dev/` | Development notes: features, stages, decisions. Start at [dev/README.md](dev/README.md) |

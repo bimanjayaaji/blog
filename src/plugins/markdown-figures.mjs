@@ -1,4 +1,4 @@
-// Markdown plugin: photos with sizes, captions and side-by-side rows (03/D6, BACKLOG B2).
+// Markdown plugin: photos with sizes, captions and side-by-side rows.
 //
 // In Markdown a photo sits in a paragraph (<p>). This plugin looks at every paragraph
 // that holds only photos (plus, optionally, one italic line at the end) and turns it

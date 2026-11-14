@@ -1,10 +1,10 @@
 ---
 /*
- * PhotoRows: an album's photos in justified rows (05/D1). Every photo keeps its whole frame;
+ * PhotoRows: an album's photos in justified rows. Every photo keeps its whole frame;
  * each row is filled edge to edge; the order is left to right, top to bottom, as in the .yaml.
  * The layout is pure CSS (no JavaScript): see the <style> below.
  *
- * Speed (05/D8):
+ * Speed:
  * - <Picture> writes a <picture> with AVIF files (small) and WebP for browsers without AVIF,
  *   each in several widths (a srcset). `sizes` tells the browser how wide the photo will
  *   roughly be on screen, so it downloads the smallest file that's still sharp.
@@ -27,7 +27,7 @@ const { photos } = Astro.props;
 // landscape photo on a phone fills the column, ~360 px); ×2 or ×3 for sharp screens → 960 max.
 const WIDTHS = [240, 360, 480, 720, 960];
 const EAGER = 8;          // photos loaded at once: about the first screen on a laptop
-const BIG = 1600;         // the full-screen version's width (02/D9: the files are ≤ 1600 anyway)
+const BIG = 1600;         // the full-screen version's width (the files are ≤ 1600 anyway)
 
 // Row heights: keep in sync with --row-height in the CSS below.
 // sizes = "how wide this photo will be". A photo is about (width ÷ height) × row height wide,
@@ -115,7 +115,7 @@ const items = await Promise.all(
     color: transparent;                /* …without the alt text drawn on it meanwhile */
   }
 
-  /* The "¶ story" label (05/D6). Always light-on-dark: it sits on the photo, not the page. */
+  /* The "¶ story" label. Always light-on-dark: it sits on the photo, not the page. */
   .story {
     position: absolute;
     right: var(--space-s);

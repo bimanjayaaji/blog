@@ -1,4 +1,4 @@
-// Helpers for the photo albums (feature 05), shared by /galleries/ and the album pages.
+// Helpers for the photo albums, shared by /galleries/ and the album pages.
 
 import { getCollection, type CollectionEntry } from 'astro:content';
 
@@ -7,7 +7,7 @@ export type Photo = Album['data']['photos'][number];
 
 /**
  * All albums that should appear on the site, in card order: `order` smallest first,
- * then by title when two albums share a number (05/D4).
+ * then by title when two albums share a number.
  * Drafts are included while developing (`npm run dev`) and left out of the real build.
  */
 export async function getAlbums(): Promise<Album[]> {
@@ -17,7 +17,7 @@ export async function getAlbums(): Promise<Album[]> {
 }
 
 /**
- * The file name becomes the address (/galleries/<name>/, 05/D3), so it may only use
+ * The file name becomes the address (/galleries/<name>/), so it may only use
  * lowercase letters, digits and "-". Anything else stops the build with a message.
  */
 function checkAlbumName(album: Album): void {
@@ -29,12 +29,12 @@ function checkAlbumName(album: Album): void {
   }
 }
 
-/** The URL of an album's page: /galleries/lof/ (05/D3). */
+/** The URL of an album's page: /galleries/lof/. */
 export function albumUrl(album: Album): string {
   return `/galleries/${album.id}/`;
 }
 
-/** The album's card photo: `cover` if set, otherwise the first photo (05/D5). */
+/** The album's card photo: `cover` if set, otherwise the first photo. */
 export function coverOf(album: Album) {
   return album.data.cover ?? album.data.photos[0].image;
 }

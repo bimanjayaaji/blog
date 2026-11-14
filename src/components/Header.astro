@@ -1,6 +1,6 @@
 ---
 /*
- * Header: site name, numbered navigation ("01 : Blog"), dark-mode toggle (03/D4, D3).
+ * Header: site name, numbered navigation ("01 : Blog"), dark-mode toggle.
  * The link for the page being viewed gets aria-current="page", which
  * screen readers announce and which the CSS below uses to highlight it.
  */
@@ -55,7 +55,7 @@ const number = (i: number) => String(i + 1).padStart(2, '0');
     align-items: center;
     column-gap: var(--space-l);
     width: 100%;                   /* needed in body's flex column, or auto margins shrink it to its content */
-    max-width: calc(var(--width-frame) + 2 * var(--gutter));   /* the wider frame (03/D8) */
+    max-width: calc(var(--width-frame) + 2 * var(--gutter));   /* the wider frame */
     margin-inline: auto;
     padding: var(--space-l) var(--gutter) 0;
     font-family: var(--font-ui);
@@ -80,7 +80,7 @@ const number = (i: number) => String(i + 1).padStart(2, '0');
   .site-name {
     font-size: var(--text-l);
     font-weight: 700;
-    color: var(--color-accent);    /* the site's teal, like the old site (user, 03/S4) */
+    color: var(--color-accent);    /* the site's teal, like the old site */
     text-decoration: none;
   }
 
@@ -110,7 +110,7 @@ const number = (i: number) => String(i + 1).padStart(2, '0');
 
   /* Phones: three menu items need ~390px at full size; slightly smaller text and gaps
      keep "01 : Blog  02 : Galleries  03 : About" on one line from ~355px up, so on
-     common 360px phones too (05/S2).
+     common 360px phones too.
      Narrower screens still wrap, which is fine. */
   @media (max-width: 39.99rem) {
     nav {

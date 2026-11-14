@@ -1,6 +1,6 @@
 ---
 /*
- * SocialLinks: Instagram, LinkedIn and Goodreads as icon links (03/D7), used in the footer.
+ * SocialLinks: Instagram, LinkedIn and Goodreads as icon links, used in the footer.
  * The links themselves are SOCIAL in src/config.ts.
  *
  * Icons: Font Awesome Free 7.3.1 brand icons (square-instagram, linkedin, goodreads)
@@ -20,7 +20,7 @@ const ICONS: Record<string, string> = {
 <ul class="social">
   {SOCIAL.map((s) => (
     <li>
-      {/* target="_blank": opens in a new tab (03/D7). noopener: the new tab can't control this one.
+      {/* target="_blank": opens in a new tab. noopener: the new tab can't control this one.
           The label tells screen-reader users about the new tab too. */}
       <a href={s.href} target="_blank" rel="me noopener" aria-label={`${s.label} (opens in a new tab)`} title={s.label}>
         <svg viewBox="0 32 448 448" aria-hidden="true" focusable="false">
