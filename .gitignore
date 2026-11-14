@@ -23,3 +23,8 @@ pnpm-debug.log*
 .idea/
 
 dev/
+# WordPress backup (feature 02, D1): kept out of git
+wp-archive/
+
+# Python virtual environments (scripts/wp-import, feature 02)
+.venv/

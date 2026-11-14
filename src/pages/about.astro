@@ -1,8 +1,57 @@
 ---
+/*
+ * About page. The text (bio, book and show lists) lives in src/content/pages/about.md:
+ * edit it there, like a post. This file only lays out the photo, the links and that text.
+ */
+import { getEntry, render } from 'astro:content';
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import portrait from '../assets/images/about/portrait.jpg';
+
+const page = await getEntry('pages', 'about');
+if (!page) throw new Error('src/content/pages/about.md is missing');
+const { Content } = await render(page);
+
+const links = [
+  { label: 'Instagram', href: 'https://www.instagram.com/bimanjayaaji/' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/bimanjaya-aji-94aa09331' },
+  { label: 'Goodreads', href: 'https://www.goodreads.com/user/show/83237760-bimanjaya' },
+];
 ---
 
-<BaseLayout title="About" description="About Bimanjaya.">
-  <h1>About</h1>
-  <p>Placeholder. The text from the WordPress About page comes over with the import-wordpress-content feature.</p>
+<BaseLayout title={page.data.title} description="Tentang Bimanjaya." lang={page.data.lang}>
+  <h1>{page.data.title}</h1>
+
+  <Image
+    src={portrait}
+    alt="me sitting at a cafe. captured by my beloved"
+    widths={[320, 640]}
+    sizes="20rem"
+    class="portrait"
+  />
+
+  <ul class="links">
+    {links.map((l) => <li><a href={l.href} rel="me">{l.label}</a></li>)}
+  </ul>
+
+  <div class="about-body">
+    <Content />
+  </div>
 </BaseLayout>
+
+<style>
+  .portrait {
+    width: 100%;
+    max-width: 20rem;            /* a portrait photo at full column width would be very tall */
+    height: auto;
+    margin-block: var(--space-m);
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-m);
+    padding: 0;
+    list-style: none;
+  }
+</style>
