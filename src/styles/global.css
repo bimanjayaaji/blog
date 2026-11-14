@@ -125,6 +125,14 @@ a:hover {
   text-decoration-thickness: 2px;
 }
 
+/* Keyboard focus (Tab key): a clear teal ring on links and buttons, in both modes.
+   :focus-visible = only when navigating by keyboard, not on every mouse click. */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
 ul,
 ol {
   padding-left: var(--space-l);

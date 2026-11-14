@@ -83,6 +83,14 @@ Put a post's photos in `src/assets/images/<slug>/` and refer to them with the `@
 - **About:** the text (bio, book and show lists) is `src/content/pages/about.md`; edit it like a post. The photo is in `src/pages/about.astro`. The Instagram / LinkedIn / Goodreads links (footer icons) and the menu are in `src/config.ts` (`SOCIAL`, `NAV`).
 - **Galleries:** `src/content/galleries/gallery.yaml` and `lof.yaml` list each gallery's photos in display order, with optional `caption` and `alt`. The photos are in `src/assets/galleries/<gallery|lof>/`. To add one, copy the photo in and add a `- image: ../../assets/galleries/lof/<file>` line where it should appear. A wrong file name stops the build. No page shows the galleries yet (planned).
 
+## The look
+
+- **Fonts:** Lora for text, Courier Prime for the name, menu and dates. Set in `astro.config.mjs` (`fonts`); Astro downloads them when building and serves them from the site itself.
+- **Colours, sizes, widths:** the tokens at the top of `src/styles/global.css`. Each colour is written `light-dark(<light>, <dark>)`; the accent is the old site's teal `#007392` (`#56b6d0` in dark mode).
+- **Dark mode:** follows the reader's system until they click the sun/moon; their choice is remembered in their browser.
+- **Menu:** `NAV` in `src/config.ts`. The numbers ("01 : Blog") come from the order, so a new entry renumbers itself.
+- **Favicon:** `public/favicon.svg` and `favicon.ico`. After replacing them, bump `?v=` in `src/layouts/BaseLayout.astro` (browsers cache icons hard).
+
 ## Layout
 
 | Path | What's in it |
@@ -94,12 +102,12 @@ Put a post's photos in `src/assets/images/<slug>/` and refer to them with the `@
 | `src/assets/galleries/` | Gallery photos, one folder per gallery |
 | `src/pages/` | One file per page; the file path is the URL (`about.astro` → `/about/`). `blog/[slug].astro` builds one page per post. |
 | `src/layouts/` | Page shells: `BaseLayout` (every page), `PostLayout` (posts) |
-| `src/components/` | Header, Footer |
-| `src/styles/global.css` | Design tokens (colours, fonts, spacing) and base styles |
-| `src/config.ts` | Site name, description, nav links |
+| `src/components/` | Header (numbered menu), ThemeToggle (sun/moon), Footer, SocialLinks (icons) |
+| `src/styles/global.css` | Design tokens (colours light + dark, fonts, sizes, widths), base styles, photo figures |
+| `src/config.ts` | Site name, description, menu (`NAV`), social links (`SOCIAL`) |
 | `src/content.config.ts` | The rules for post frontmatter, page text and gallery lists |
 | `src/plugins/` | Markdown plugins: photos → figures (sizes, captions, rows); image size hints |
-| `public/` | Files copied as-is to the site root (favicon) |
-| `astro.config.mjs` | Astro settings (image sizes, Markdown processing) |
+| `public/` | Files copied as-is to the site root (favicon: "b." on teal) |
+| `astro.config.mjs` | Astro settings: fonts, `/` → `/blog/`, image sizes, code colours, Markdown processing |
 | `scripts/wp-import/` | One-off scripts that imported the old WordPress site (from `wp-archive/`, not in git) |
 | `dev/` | Development notes: features, stages, decisions. Start at [dev/README.md](dev/README.md) |
