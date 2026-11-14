@@ -5,6 +5,7 @@
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PhotoRows from '../../components/PhotoRows.astro';
+import PhotoViewer from '../../components/PhotoViewer.astro';
 import { getAlbums, describePhotos, type Album } from '../../lib/galleries';
 
 // getStaticPaths runs once at build time: it lists every page this file makes,
@@ -25,6 +26,7 @@ const { title, description, photos, draft } = album.data;
   <p class="intro">{describePhotos(album)}</p>
 
   <PhotoRows photos={photos} />
+  <PhotoViewer />
 </BaseLayout>
 
 <style>
