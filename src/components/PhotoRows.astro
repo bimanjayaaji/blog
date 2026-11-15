@@ -1,0 +1,131 @@
+---
+/*
+ * PhotoRows: an album's photos in justified rows. Every photo keeps its whole frame;
+ * each row is filled edge to edge; the order is left to right, top to bottom, as in the .yaml.
+ * The layout is pure CSS (no JavaScript): see the <style> below.
+ *
+ * Speed:
+ * - <Picture> writes a <picture> with AVIF files (small) and WebP for browsers without AVIF,
+ *   each in several widths (a srcset). `sizes` tells the browser how wide the photo will
+ *   roughly be on screen, so it downloads the smallest file that's still sharp.
+ * - The first few photos load at once; the rest only as the reader scrolls near them (lazy).
+ * - width/height are written into the page, so space is kept and nothing jumps while loading.
+ *
+ * Each photo is a link to a big version (WebP, at most 1600 px wide). Without JavaScript that
+ * just opens the photo; the full-screen view (PhotoViewer.astro) uses the same link.
+ */
+import { Picture, getImage } from 'astro:assets';
+import type { Photo } from '../lib/galleries';
+
+interface Props {
+  photos: Photo[];
+}
+
+const { photos } = Astro.props;
+
+// Thumbnail widths to generate. The widest a thumbnail is shown is ~2× its row height (a lone
+// landscape photo on a phone fills the column, ~360 px); ×2 or ×3 for sharp screens → 960 max.
+const WIDTHS = [240, 360, 480, 720, 960];
+const EAGER = 8;          // photos loaded at once: about the first screen on a laptop
+const BIG = 1600;         // the full-screen version's width (the files are ≤ 1600 anyway)
+
+// Row heights: keep in sync with --row-height in the CSS below.
+// sizes = "how wide this photo will be". A photo is about (width ÷ height) × row height wide,
+// a bit more once its row is stretched to fill the line; never wider than the column.
+function sizesFor(ratio: number): string {
+  const r = ratio.toFixed(3);
+  return [
+    `(max-width: 40rem) min(calc(100vw - 2rem), calc(${r} * 8rem * 1.4))`,
+    `min(64rem, calc(${r} * 13rem * 1.25))`,
+  ].join(', ');
+}
+
+const items = await Promise.all(
+  photos.map(async (photo, i) => {
+    const { width, height } = photo.image;
+    const big = await getImage({ src: photo.image, format: 'webp', width: Math.min(width, BIG) });
+    return { photo, i, ratio: width / height, bigSrc: big.src };
+  }),
+);
+---
+
+<div class="photo-rows">
+  {items.map(({ photo, i, ratio, bigSrc }) => (
+    <a
+      href={bigSrc}
+      style={`--ratio: ${ratio.toFixed(3)}`}
+      data-caption={photo.caption}
+    >
+      <Picture
+        src={photo.image}
+        formats={['avif']}
+        fallbackFormat="webp"
+        widths={WIDTHS}
+        sizes={sizesFor(ratio)}
+        alt={photo.alt || `Photo ${i + 1} of ${photos.length}`}
+        loading={i < EAGER ? 'eager' : 'lazy'}
+        decoding="async"
+      />
+      {photo.caption && (
+        <span class="story">¶ story<span class="visually-hidden"> (this photo has a story)</span></span>
+      )}
+    </a>
+  ))}
+</div>
+
+<style>
+  /*
+   * Justified rows. Each photo is a flex item:
+   *   flex-basis = ratio × row height → its natural width at that height;
+   *   flex-grow  = ratio              → leftover space in a row is shared in proportion,
+   *                                     so every photo in the row grows to the same height.
+   * The ::after "spacer" soaks up the space in the last row, so it isn't stretched.
+   */
+  .photo-rows {
+    --row-height: 8rem;          /* phones */
+    --gap: var(--space-s);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap);
+    margin-top: var(--space-l);
+  }
+
+  @media (min-width: 40rem) {
+    .photo-rows {
+      --row-height: 13rem;
+    }
+  }
+
+  .photo-rows::after {
+    content: '';
+    flex-grow: 999;
+  }
+
+  .photo-rows a {
+    position: relative;
+    flex: var(--ratio) 1 calc(var(--ratio) * var(--row-height));
+    cursor: zoom-in;
+  }
+
+  /* :global: the <picture>/<img> come from Astro's component, outside this file's scope. */
+  .photo-rows a :global(img) {
+    width: 100%;
+    height: auto;
+    background: var(--color-border);   /* a grey box until the photo arrives */
+    color: transparent;                /* …without the alt text drawn on it meanwhile */
+  }
+
+  /* The "¶ story" label. Always light-on-dark: it sits on the photo, not the page. */
+  .story {
+    position: absolute;
+    right: var(--space-s);
+    bottom: var(--space-s);
+    padding: 0 var(--space-s);
+    border-radius: 3px;
+    background: rgb(0 0 0 / 0.55);
+    color: #fff;
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    line-height: 1.6;
+  }
+</style>

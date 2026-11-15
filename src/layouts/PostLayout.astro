@@ -1,8 +1,8 @@
 ---
 /*
  * PostLayout: wraps a single post. It sits inside BaseLayout (header, footer, <head>)
- * and adds the post's title, date and tags (linking to their tag pages, 04/D5) above the body, and links to the
- * previous (older) and next (newer) post below it (03/D6).
+ * and adds the post's title, date and tags (linking to their tag pages) above the body, and links to the
+ * previous (older) and next (newer) post below it.
  */
 import BaseLayout from './BaseLayout.astro';
 import { formatDate, postUrl, tagUrl, type Post } from '../lib/posts';
@@ -59,7 +59,7 @@ const { title, date, description, tags, draft, lang } = post.data;
 </BaseLayout>
 
 <style>
-  /* Title, date and tags centred above the post, like the old site's post titles (04/D6). */
+  /* Title, date and tags centred above the post, like the old site's post titles. */
   .post-header {
     margin-bottom: var(--space-l);
     text-align: center;

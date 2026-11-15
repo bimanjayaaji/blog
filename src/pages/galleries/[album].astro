@@ -1,0 +1,54 @@
+---
+/*
+ * One page per photo album, at /galleries/<name>/. <name> is the .yaml file's name in
+ * src/content/galleries/, so a new album file gets its page with no change here.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PhotoRows from '../../components/PhotoRows.astro';
+import PhotoViewer from '../../components/PhotoViewer.astro';
+import { getAlbums, describePhotos, type Album } from '../../lib/galleries';
+
+// getStaticPaths runs once at build time: it lists every page this file makes,
+// one per album, and hands each its album as a prop.
+export async function getStaticPaths() {
+  const albums = await getAlbums();
+  return albums.map((album) => ({ params: { album: album.id }, props: { album } }));
+}
+
+const { album } = Astro.props as { album: Album };
+const { title, description, photos, draft } = album.data;
+---
+
+<BaseLayout title={title} description={description ?? `${title}: photos by Bimanjaya.`} wide>
+  <p class="eyebrow"><a href="/galleries/">← All galleries</a></p>
+  <h1>{title}{draft && <span class="draft">draft</span>}</h1>
+  {description && <p class="description">{description}</p>}
+  <p class="intro">{describePhotos(album)}</p>
+
+  <PhotoRows photos={photos} />
+  <PhotoViewer />
+</BaseLayout>
+
+<style>
+  .eyebrow a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .eyebrow a:hover {
+    color: var(--color-accent);
+  }
+
+  .description {
+    margin-top: var(--space-s);
+    max-width: var(--width-text);
+  }
+
+  .draft {
+    margin-left: var(--space-s);
+    color: var(--color-muted);
+    font-family: var(--font-ui);
+    font-size: var(--text-s);
+    font-weight: 400;
+  }
+</style>

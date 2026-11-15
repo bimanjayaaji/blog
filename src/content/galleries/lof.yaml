@@ -1,6 +1,9 @@
 # Life on Film (Yes, Film Still Exists): photos in display order. Move lines to reorder.
-# Each photo: image (required), caption (optional), alt (optional; to write in feature 05).
+# Each photo: image (required), caption (optional: the story, gives a ¶ mark), alt (optional:
+# what the photo shows, for screen readers).
+# order: where the album's card sits on /galleries/ (smallest first).
 title: "Life on Film (Yes, Film Still Exists)"
+order: 2
 photos:
   - image: ../../assets/galleries/lof/pano-29.jpg
   - image: ../../assets/galleries/lof/pano-10.jpg

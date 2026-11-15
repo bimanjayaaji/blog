@@ -15,7 +15,7 @@ export async function getPosts(): Promise<Post[]> {
 }
 
 /**
- * Some addresses under /blog/ belong to other pages: /blog/2025/ (a year, 04/D4) and
+ * Some addresses under /blog/ belong to other pages: /blog/2025/ (a year) and
  * /blog/tag/ (the tags). A post file with such a name would collide with them, so the
  * build stops here with a message instead of quietly showing the wrong page.
  */
@@ -47,7 +47,7 @@ export function formatDate(date: Date): string {
   });
 }
 
-/** "9 Nov": the date without its year, for lists grouped by year (04/D1). UTC, like formatDate. */
+/** "9 Nov": the date without its year, for lists grouped by year. UTC, like formatDate. */
 export function formatShortDate(date: Date): string {
   return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' });
 }
@@ -73,20 +73,19 @@ export function groupByYear(posts: Post[]): { year: number; posts: Post[] }[] {
     .map(([year, posts]) => ({ year, posts }));
 }
 
-/** The URL of a year's page: /blog/2025/ (04/D4; the page itself comes in S3). */
+/** The URL of a year's page: /blog/2025/. */
 export function yearUrl(year: number): string {
   return `/blog/${year}/`;
 }
 
 /**
  * A tag's part of a URL: lowercase, spaces → "-" ("Life on Film" → "life-on-film").
- * Proposed rule, 04/D3; the four current tags are already in this form.
  */
 export function tagSlug(tag: string): string {
   return tag.trim().toLowerCase().replace(/\s+/g, '-');
 }
 
-/** The URL of a tag's page: /blog/tag/thoughts/ (04/D3; the page itself comes in S2). */
+/** The URL of a tag's page: /blog/tag/thoughts/. */
 export function tagUrl(tag: string): string {
   return `/blog/tag/${tagSlug(tag)}/`;
 }
@@ -103,7 +102,7 @@ export interface Tag {
 }
 
 /**
- * Every tag used by these posts, most-used first, then A–Z (04/D3).
+ * Every tag used by these posts, most-used first, then A–Z.
  * Tags that give the same slug ("Books" and "books") count as one tag.
  */
 export function getTags(posts: Post[]): Tag[] {

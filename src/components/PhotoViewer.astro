@@ -1,0 +1,239 @@
+---
+/*
+ * PhotoViewer: the full-screen view for an album's photos. Put it on a page after
+ * <PhotoRows>; it reads the photos from those links, so there's no extra data to download.
+ *
+ * - <dialog> is the browser's own pop-up element: showModal() puts it above the page,
+ *   keeps keyboard focus inside it, and closes it on Esc, with no library.
+ * - Opening a photo shows its thumbnail at once (already downloaded for the page), then
+ *   swaps in the big file when it has arrived. Only the photos actually opened are downloaded.
+ * - ← → keys, ‹ › buttons, swipe on phones; ✕, Esc, a click beside the photo or the phone's
+ *   Back button close it.
+ * - Without JavaScript nothing here runs: each photo stays a plain link to its big file.
+ */
+---
+
+<dialog class="viewer" aria-label="Photo viewer">
+  <div class="stage">
+    <img alt="" />
+  </div>
+  <p class="caption"></p>
+  <p class="counter" aria-live="polite"></p>
+  <button class="close" type="button" aria-label="Close">✕</button>
+  <button class="prev" type="button" aria-label="Previous photo">‹</button>
+  <button class="next" type="button" aria-label="Next photo">›</button>
+</dialog>
+
+<script>
+  // Astro bundles and minifies this script; it runs once per album page.
+  const rows = document.querySelector<HTMLElement>('.photo-rows');
+  const viewer = document.querySelector<HTMLDialogElement>('dialog.viewer');
+
+  if (rows && viewer) {
+    const links = [...rows.querySelectorAll<HTMLAnchorElement>('a')];
+    const img = viewer.querySelector('img')!;
+    const caption = viewer.querySelector<HTMLElement>('.caption')!;
+    const counter = viewer.querySelector<HTMLElement>('.counter')!;
+    let current = 0;
+
+    function show(index: number) {
+      current = (index + links.length) % links.length;   // wraps around: after the last comes the first
+      const link = links[current];
+      const thumb = link.querySelector('img')!;
+
+      // 1. The thumbnail, if the page has loaded it (a lazy one far down may not be yet).
+      if (thumb.complete && thumb.currentSrc) img.src = thumb.currentSrc;
+      else img.removeAttribute('src');
+      img.alt = thumb.alt;
+
+      // 2. The big file; shown only if the reader is still on this photo when it arrives.
+      const wanted = current;
+      const big = new Image();
+      big.src = link.href;
+      big.decode().then(() => {
+        if (current === wanted) img.src = big.src;
+      }, () => {});
+
+      const text = link.dataset.caption ?? '';
+      caption.textContent = text;
+      caption.hidden = !text;
+      caption.scrollTop = 0;
+      counter.textContent = `${current + 1} / ${links.length}`;
+    }
+
+    // Open: a plain click on a photo. Ctrl/Cmd/middle-click still open the file in a new tab.
+    rows.addEventListener('click', (event) => {
+      const link = (event.target as Element).closest('a');
+      if (!link || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      event.preventDefault();
+      show(links.indexOf(link as HTMLAnchorElement));
+      viewer.showModal();
+      // An extra history entry, so the phone's Back button closes the photo instead of leaving.
+      history.pushState({ photoViewer: true }, '');
+    });
+
+    viewer.querySelector('.prev')!.addEventListener('click', () => show(current - 1));
+    viewer.querySelector('.next')!.addEventListener('click', () => show(current + 1));
+    viewer.querySelector('.close')!.addEventListener('click', () => viewer.close());
+
+    // Is a click on the picture itself? The <img> box fills the whole stage, and the photo is
+    // fitted inside it (object-fit: contain), so the dark bands beside or above it are still
+    // part of the <img>. Work out where the picture really is from its own width and height.
+    function onPicture(event: MouseEvent): boolean {
+      if (!img.naturalWidth) return false;
+      const box = img.getBoundingClientRect();
+      const scale = Math.min(box.width / img.naturalWidth, box.height / img.naturalHeight);
+      const w = img.naturalWidth * scale;
+      const h = img.naturalHeight * scale;
+      const left = box.left + (box.width - w) / 2;
+      const top = box.top + (box.height - h) / 2;
+      return event.clientX >= left && event.clientX <= left + w && event.clientY >= top && event.clientY <= top + h;
+    }
+
+    // A click on the dark area anywhere around the photo closes it (not on the photo,
+    // the story, the counter or the buttons).
+    viewer.addEventListener('click', (event) => {
+      const target = event.target as Element;
+      if (target === viewer || target.classList.contains('stage') || (target === img && !onPicture(event))) {
+        viewer.close();
+      }
+    });
+
+    viewer.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') show(current - 1);
+      if (event.key === 'ArrowRight') show(current + 1);
+    });
+
+    // Swipe: a mostly-sideways finger move of at least 50px.
+    let startX = 0;
+    let startY = 0;
+    viewer.addEventListener('touchstart', (event) => {
+      startX = event.touches[0].clientX;
+      startY = event.touches[0].clientY;
+    }, { passive: true });
+    viewer.addEventListener('touchend', (event) => {
+      const dx = event.changedTouches[0].clientX - startX;
+      const dy = event.changedTouches[0].clientY - startY;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) show(current + (dx < 0 ? 1 : -1));
+    });
+
+    // However it was closed (✕, Esc, click outside): drop our history entry, and put the
+    // keyboard focus back on the photo the reader ended on (the page scrolls to it).
+    viewer.addEventListener('close', () => {
+      if (history.state?.photoViewer) history.back();
+      links[current].focus();
+    });
+
+    // Back button: the history entry is gone, so close the viewer.
+    window.addEventListener('popstate', () => {
+      if (viewer.open) viewer.close();
+    });
+  }
+</script>
+
+<style>
+  /*
+   * Always dark, in light and dark mode: photos look best on a dark surround, and the
+   * colours here sit on that surround, not on the page (so no page tokens for colours).
+   */
+  .viewer {
+    width: 100%;
+    max-width: none;
+    height: 100dvh;                /* dvh: the visible height, also with a phone's address bar */
+    max-height: none;
+    padding: var(--space-xl) var(--space-s) var(--space-s);
+    border: 0;
+    background: #0c0e0f;
+    color: #e4e4e0;
+    color-scheme: dark;            /* dark scrollbar on a long story */
+  }
+
+  .viewer::backdrop {
+    background: transparent;
+  }
+
+  /* Open: photo on top (takes the free height), then caption, then counter. */
+  .viewer[open] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-s);
+  }
+
+  @media (min-width: 40rem) {
+    .viewer {
+      padding-inline: var(--space-xl);   /* room for the ‹ › buttons beside the photo */
+    }
+  }
+
+  .stage {
+    flex: 1;
+    min-height: 0;                 /* lets the photo shrink to the free height */
+    width: 100%;
+  }
+
+  /* Fills the stage but keeps its shape (contain), so a small thumbnail and the big
+     file appear at the same size: the swap only makes it sharper. */
+  .stage img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    color: transparent;            /* no alt text drawn while the photo is on its way */
+  }
+
+  /* The story: long ones scroll inside a box instead of squeezing the photo. */
+  .caption {
+    max-width: 40rem;
+    max-height: 30dvh;
+    overflow-y: auto;
+    scrollbar-color: #4a5054 transparent;   /* a dark scrollbar, not the page's light one */
+    font-size: var(--text-s);
+    line-height: 1.6;
+  }
+
+  .counter {
+    color: #9aa1a5;
+    font-family: var(--font-ui);
+    font-size: var(--text-s);
+  }
+
+  .viewer button {
+    position: absolute;
+    min-width: 2.75rem;            /* a ~44px tap target */
+    min-height: 2.75rem;
+    border: 0;
+    border-radius: 4px;
+    background: rgb(0 0 0 / 0.35);
+    color: inherit;
+    font-size: 1.75rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .viewer button:hover {
+    background: rgb(255 255 255 / 0.12);
+  }
+
+  .viewer button:focus-visible {
+    outline-color: #e4e4e0;
+  }
+
+  .close {
+    top: var(--space-s);
+    right: var(--space-s);
+  }
+
+  .prev,
+  .next {
+    top: 50%;
+    translate: 0 -50%;
+  }
+
+  .prev { left: var(--space-xs); }
+  .next { right: var(--space-xs); }
+
+  /* While the viewer is open, the page behind it doesn't scroll. */
+  :global(html:has(.viewer[open])) {
+    overflow: hidden;
+  }
+</style>

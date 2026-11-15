@@ -1,0 +1,113 @@
+---
+/*
+ * All photo albums, at /galleries/: one card per album, in each album's `order`.
+ * A card = cover photo (cropped to 3:2 so the cards line up), title, description, photo count.
+ * A new .yaml in src/content/galleries/ gets its card here with no change to this file.
+ */
+import { Picture } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAlbums, albumUrl, coverOf, describePhotos } from '../../lib/galleries';
+
+const albums = await getAlbums();
+const photoCount = albums.reduce((n, album) => n + album.data.photos.length, 0);
+
+// Cover widths to generate. A card is at most ~31rem (two per row at the 64rem frame);
+// ×2 for sharp screens → 1280 max. Astro crops each size to 3:2 (width and height below).
+const WIDTHS = [320, 480, 640, 960, 1280];
+// How wide a card is: the column on phones, half the frame on mid-size screens, then
+// about a third or half of 64rem (two albums: half; three or more: a third).
+const SIZES = '(max-width: 40rem) calc(100vw - 2rem), (max-width: 66rem) calc(50vw - 1.5rem), 31.5rem';
+---
+
+<BaseLayout title="Galleries" description="Photo albums by Bimanjaya." wide>
+  <h1>Galleries</h1>
+  <p class="intro">
+    {albums.length} album{albums.length === 1 ? '' : 's'} · {photoCount} photos
+  </p>
+
+  <ul class="cards">
+    {albums.map((album, i) => (
+      <li>
+        <a class="card" href={albumUrl(album)}>
+          <Picture
+            src={coverOf(album)}
+            formats={['avif']}
+            fallbackFormat="webp"
+            width={1280}
+            height={853}
+            fit="cover"
+            widths={WIDTHS}
+            sizes={SIZES}
+            alt=""
+            loading={i < 2 ? 'eager' : 'lazy'}
+            decoding="async"
+          />
+          <h2>
+            {album.data.title}
+            {album.data.draft && <span class="draft">draft</span>}
+          </h2>
+          {album.data.description && <p class="description">{album.data.description}</p>}
+          <p class="count">{describePhotos(album)}</p>
+        </a>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>
+
+<style>
+  /* As many ~18rem columns as fit (3 at full width, 1 on phones); with fewer albums
+     than columns, the cards share the row (two albums: two half-width cards). */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: var(--space-l);
+    margin-top: var(--space-l);
+    padding: 0;
+    list-style: none;
+  }
+
+  /* The whole card is one link; the text inside keeps its own colours. */
+  .card {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .card :global(img) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    background: var(--color-border);   /* a grey box until the photo arrives */
+    color: transparent;
+  }
+
+  .card h2 {
+    margin-top: var(--space-s);
+    font-size: var(--text-l);
+  }
+
+  .card:hover h2,
+  .card:focus-visible h2 {
+    color: var(--color-accent);
+  }
+
+  .description {
+    margin-top: var(--space-xs);
+  }
+
+  .count {
+    margin-top: var(--space-xs);
+    color: var(--color-muted);
+    font-family: var(--font-ui);
+    font-size: var(--text-s);
+  }
+
+  .draft {
+    margin-left: var(--space-s);
+    color: var(--color-muted);
+    font-family: var(--font-ui);
+    font-size: var(--text-s);
+    font-weight: 400;
+  }
+</style>

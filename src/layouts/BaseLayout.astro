@@ -19,9 +19,10 @@ interface Props {
   title?: string;        // page title; omitted on the home page
   description?: string;  // shown by search engines and link previews
   lang?: string;         // page language; defaults to the site's (posts pass their own)
+  wide?: boolean;        // true: content uses the wider frame (64rem) instead of the text column; photo albums
 }
 
-const { title, description = SITE.description, lang = SITE.lang } = Astro.props;
+const { title, description = SITE.description, lang = SITE.lang, wide = false } = Astro.props;
 const fullTitle = title ? `${title} · ${SITE.name}` : SITE.name;
 ---
 
@@ -60,7 +61,7 @@ const fullTitle = title ? `${title} · ${SITE.name}` : SITE.name;
   </head>
   <body>
     <Header />
-    <main>
+    <main class:list={{ wide }}>
       <slot />
     </main>
     <Footer />
@@ -75,5 +76,10 @@ const fullTitle = title ? `${title} · ${SITE.name}` : SITE.name;
     max-width: calc(var(--width-text) + 2 * var(--gutter));   /* the padding sits inside max-width */
     margin-inline: auto;
     padding: var(--space-l) var(--gutter) var(--space-xl);
+  }
+
+  /* Pages made of photos (the albums, 05) use the wider frame, like the header. */
+  main.wide {
+    max-width: calc(var(--width-frame) + 2 * var(--gutter));
   }
 </style>

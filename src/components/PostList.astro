@@ -1,7 +1,7 @@
 ---
 /*
- * PostList: a list of posts, shared by the blog list (/blog/) and, later, the tag pages (S2)
- * and year pages (S3) of the blog-index feature (04/D1).
+ * PostList: a list of posts, shared by the blog list (/blog/), the tag pages (/blog/tag/<tag>/)
+ * and the year pages (/blog/<year>/).
  *
  *   groupByYear (default true):  a heading per year ("2025  6 posts", linking to the
  *                                year's page), then that year's posts.
@@ -97,7 +97,7 @@ const groups: { year?: number; posts: Post[] }[] = groupByYear ? splitByYear(pos
 
   /*
    * Two columns at every width: date | title, and the tags on a second line under the title.
-   * (Tags beside the title squeezed long titles once a post had several tags: 04/D1.)
+   * (Tags beside the title squeezed long titles once a post had several tags.)
    *   9 Nov   Wallpaper of Our Life
    *           thoughts
    */
@@ -125,7 +125,7 @@ const groups: { year?: number; posts: Post[] }[] = groupByYear ? splitByYear(pos
     color: var(--color-muted);
   }
 
-  /* Titles in the text colour, teal when pointed at (03/D11); same for the year and the tags. */
+  /* Titles in the text colour, teal when pointed at; same for the year and the tags. */
   .title a {
     color: var(--color-text);
     text-decoration: none;

@@ -4,7 +4,7 @@
   "exclude": ["dist"],
   "compilerOptions": {
     "paths": {
-      // Shortcut for the shared images folder (D7): in a post, write
+      // Shortcut for the shared images folder: in a post, write
       // ![alt](@images/<post>/photo.jpg) instead of ../../assets/images/<post>/photo.jpg
       "@images/*": ["./src/assets/images/*"]
     }
