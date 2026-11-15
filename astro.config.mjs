@@ -4,6 +4,7 @@ import { satteri } from '@astrojs/markdown-satteri';
 import { markdownImageSizes } from './src/plugins/markdown-image-sizes.mjs';
 import { markdownFigures } from './src/plugins/markdown-figures.mjs';
 import { markdownExternalLinks } from './src/plugins/markdown-external-links.mjs';
+import sitemap from '@astrojs/sitemap';
 
 // Image widths to generate. The text column is at most 736px (46rem); ×2 for
 // high-density (retina) screens needs ~1472, covered by 1920. 1920 also leaves room
@@ -12,9 +13,13 @@ const IMAGE_WIDTHS = [640, 960, 1280, 1920];
 
 // https://astro.build/config
 export default defineConfig({
-  // No home page: the site opens on the blog list. In the built site Astro writes a
-  // tiny dist/index.html that forwards straight to /blog/; a host like Cloudflare can turn
-  // this into a real server redirect when the site is hosted.
+  // The live address. The sitemap uses it to write full links (https://bimanjayaaji.com/…).
+  // No "www": www.bimanjayaaji.com forwards here (a Cloudflare redirect rule).
+  site: 'https://bimanjayaaji.com',
+
+  // No home page: the site opens on the blog list. Astro writes a tiny dist/index.html
+  // that forwards to /blog/ in the browser (used by `npm run preview`). On Cloudflare,
+  // public/_redirects answers / with a real 301 redirect before that page is reached.
   redirects: {
     '/': '/blog/',
   },
@@ -84,4 +89,10 @@ export default defineConfig({
       ],
     }),
   },
+
+  integrations: [
+    // Writes sitemap-index.xml + sitemap-0.xml (every page's address) for search engines.
+    // public/robots.txt points to it. Runs at build time; adds nothing to the pages.
+    sitemap(),
+  ],
 });

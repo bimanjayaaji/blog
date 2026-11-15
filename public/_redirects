@@ -1,0 +1,5 @@
+# Redirects that Cloudflare applies before serving any file (one rule per line:
+# from, to, status code). 301 = moved permanently.
+
+# No home page: the site opens on the blog list.
+/ /blog/ 301

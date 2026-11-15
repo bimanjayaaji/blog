@@ -35,3 +35,6 @@ scripts/wp-import/
 __pycache__/
 
 .vscode/
+
+# Cloudflare's local cache (npx wrangler dev)
+.wrangler/

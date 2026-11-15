@@ -17,6 +17,7 @@ npm run dev      # dev server at http://localhost:4321, reloads on save
 | `npm run dev` | Dev server with live reload. Shows drafts. |
 | `npm run build` | Build the finished site into `dist/`. Leaves drafts out. |
 | `npm run preview` | Serve `dist/` locally, to check the build before publishing |
+| `npx wrangler dev` | Serve `dist/` the way Cloudflare does (redirects from `public/_redirects`, the 404 page with a real 404 status), at http://localhost:8787. Run `npm run build` first. |
 | `npm run clean` | Delete Astro's cache of rendered posts (after changing Markdown settings or plugins) |
 | `npm run gallery <name>` | Create or extend a photo album's list from its folder (see [Galleries](#galleries)) |
 
@@ -167,6 +168,7 @@ photos:                        # keep this the last field (the helper adds photo
 | `src/config.ts` | Site name, description, menu (`NAV`), social links (`SOCIAL`) |
 | `src/content.config.ts` | The rules for post frontmatter, page text and gallery lists |
 | `src/plugins/` | Markdown plugins: photos → figures (sizes, captions, rows); image size hints; outside links in a new tab (About page only) |
-| `public/` | Files copied as-is to the site root (favicon: "b." on teal) |
-| `astro.config.mjs` | Astro settings: fonts, `/` → `/blog/`, image sizes, code colours, Markdown processing |
+| `public/` | Files copied as-is to the site root: favicon ("b." on teal), `robots.txt` (for search engines), `_redirects` (redirects Cloudflare applies, e.g. `/` → `/blog/`) |
+| `astro.config.mjs` | Astro settings: the live address (`site`), fonts, `/` → `/blog/`, image sizes, code colours, Markdown processing, the sitemap |
+| `wrangler.jsonc` | Cloudflare settings: publish the `dist/` folder, show `404.html` for unknown addresses |
 | `scripts/gallery.mjs` | `npm run gallery <name>`: creates or extends an album's list |
