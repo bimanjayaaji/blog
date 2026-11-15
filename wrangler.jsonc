@@ -23,5 +23,10 @@
     // /blog redirects to /blog/ (pages are folders with an index.html). The default,
     // written out so it's clear where that redirect comes from.
     "html_handling": "auto-trailing-slash"
-  }
+  },
+
+  // Settings for preview builds (every branch except main gets its own address).
+  // Cloudflare's preview command refuses to run without this block. It stays empty:
+  // the site has no secrets or databases that previews would need their own copy of.
+  "previews": {}
 }

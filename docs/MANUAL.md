@@ -20,6 +20,7 @@ npm run dev      # dev server at http://localhost:4321, reloads on save
 | `npx wrangler dev` | Serve `dist/` the way Cloudflare does (redirects from `public/_redirects`, the 404 page with a real 404 status), at http://localhost:8787. Run `npm run build` first. |
 | `npm run clean` | Delete Astro's cache of rendered posts (after changing Markdown settings or plugins) |
 | `npm run gallery <name>` | Create or extend a photo album's list from its folder (see [Galleries](#galleries)) |
+| `python3 scripts/shrink_images.py <folder>` | Shrink big photos in a folder, in place (see [Photos](#photos)). Add `--dry-run` to only see what it would do. |
 
 ## Write a post
 
@@ -73,7 +74,12 @@ Put a post's photos in `src/assets/images/<slug>/` and refer to them with the `@
 ```
 
 - The text in `[…]` describes the photo for people who can't see it (screen readers, slow connections). Always fill it in.
-- Use full-size photos straight from the camera or phone. The build makes resized WebP versions (640–1920 px wide) and each reader's browser downloads the one that fits their screen.
+- The build makes resized WebP versions (640–1920 px wide) and each reader's browser downloads the one that fits their screen, so readers never get the original file. Originals are still kept in git forever, so shrink big ones (a 5 MB phone photo) before committing:
+  ```sh
+  python3 scripts/shrink_images.py src/assets/images/<slug> --dry-run   # see what would change
+  python3 scripts/shrink_images.py src/assets/images/<slug>             # do it
+  ```
+  It scales photos down to 2400 px on the longer side and re-saves files above 1 MB at quality 85 (no visible difference), keeping each file's name and format so the Markdown stays the same. It also removes the photo's hidden details (camera, date, GPS location). Files already small enough are left alone, so running it twice is harmless. It changes the files in place: keep the originals elsewhere if you want them. Needs Pillow (`sudo apt install python3-pil`). Options: `--max-side`, `--max-kb`, `--quality`, `--recursive` (`--help` lists them). Works for album folders too.
 - Photos are shown as wide as the text column, and never taller than 80% of the screen (tall portraits shrink and are centred). An HTML `<img>` tag in a post is **not** optimised (and its path won't work), so stick to `![…](…)`.
 - **Sizes:** add `{.small}` (at most half the column, centred: screenshots, small images) or `{.wide}` (wider than the text, on big screens) right after the image:
   ```markdown
@@ -172,3 +178,4 @@ photos:                        # keep this the last field (the helper adds photo
 | `astro.config.mjs` | Astro settings: the live address (`site`), fonts, `/` → `/blog/`, image sizes, code colours, Markdown processing, the sitemap |
 | `wrangler.jsonc` | Cloudflare settings: publish the `dist/` folder, show `404.html` for unknown addresses |
 | `scripts/gallery.mjs` | `npm run gallery <name>`: creates or extends an album's list |
+| `scripts/shrink_images.py` | Shrinks big photos in a folder before they're committed |
