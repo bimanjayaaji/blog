@@ -1,0 +1,27 @@
+// Cloudflare settings. The site is plain files made by `npm run build` (the dist/
+// folder); Cloudflare serves them as they are, with no server code.
+// Cloudflare runs `npm run build` and then `npx wrangler deploy` on every push to main.
+// Docs: https://developers.cloudflare.com/workers/static-assets/
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+
+  // The project's name in the Cloudflare dashboard; also gives the free
+  // temporary address blog.<account>.workers.dev.
+  "name": "blog",
+
+  // Which version of Cloudflare's runtime behaviour to use. Set to the day this file
+  // was written; only needs changing to opt in to newer behaviour.
+  "compatibility_date": "2026-11-15",
+
+  "assets": {
+    // The folder to publish.
+    "directory": "./dist",
+
+    // An address with no page shows dist/404.html, with a real "404 Not Found" status.
+    "not_found_handling": "404-page",
+
+    // /blog redirects to /blog/ (pages are folders with an index.html). The default,
+    // written out so it's clear where that redirect comes from.
+    "html_handling": "auto-trailing-slash"
+  }
+}
